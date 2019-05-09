@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="5dp">
+
+    <TextView
+        android:id="@+id/nothing_1"
+        android:layout_width="65dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/mitextView2"
+        android:layout_below="@+id/mitextView2"
+        android:text="Số lượng :"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:layout_editor_absoluteY="208dp" />
+
+    <TextView
+        android:id="@+id/textView26"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/textView3"
+        android:layout_below="@+id/textView3"
+        android:text="Loại :"
+        tools:layout_editor_absoluteX="51dp"
+        tools:layout_editor_absoluteY="116dp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/nothing_1"
+        android:layout_below="@+id/nothing_1"
+        android:text="Giá bán :"
+        tools:layout_editor_absoluteX="51dp"
+        tools:layout_editor_absoluteY="116dp" />
+
+    <TextView
+        android:id="@+id/mitextView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000"
+        android:layout_alignStart="@+id/mitextView4"
+        android:layout_below="@+id/mitextView4"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/mitextView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textColor="#000"
+        tools:layout_editor_absoluteX="31dp"
+        tools:layout_editor_absoluteY="75dp"
+        android:layout_below="@+id/mitextView3"
+        android:layout_toEndOf="@+id/nothing_1" />
+
+    <TextView
+        android:id="@+id/mitextView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textColor="#000"
+        tools:layout_editor_absoluteX="137dp"
+        tools:layout_editor_absoluteY="116dp"
+        android:layout_alignBaseline="@+id/nothing_1"
+        android:layout_alignBottom="@+id/nothing_1"
+        android:layout_toEndOf="@+id/nothing_1" />
+
+    <TextView
+        android:id="@+id/mitextView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mitextView1"
+        android:layout_marginStart="80dp"
+        android:text="TextView"
+        android:textAlignment="textStart"
+        android:textColor="#000"
+        app:layout_constraintLeft_toRightOf="@+id/mitextView1"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/mitextView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:paddingLeft="10dp"
+        android:text="TextView"
+        android:textColor="#000"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="10dp"
+        tools:layout_editor_absoluteY="1dp" />
+
+</RelativeLayout>

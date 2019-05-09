@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/bi_mer_name"
+                android:layout_width="175dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:text="TextView"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/useless"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:text="Kho:"
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/bi_mer_sum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="cái"
+                android:textAlignment="center"
+                android:textColor="#000000" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="50dp"
+                android:text="SL:" />
+
+            <TextView
+                android:id="@+id/bi_mer_amount"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:text="345"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/useless3"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text="x"
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/bi_mer_price"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:textAlignment="center"
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/useless4"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text="="
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/bi_mer_output"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:text="TextView"
+                android:textAlignment="center"
+                android:textColor="#000000" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="match_parent" />
+
+            <Button
+                android:id="@+id/btn_up_amount"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@mipmap/icon_plus" />
+
+            <TextView
+                android:id="@+id/textView22"
+                android:layout_width="30dp"
+                android:layout_height="match_parent" />
+
+            <Button
+                android:id="@+id/btn_down_amount"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@mipmap/icon_minus" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_dell_pro_in_bill"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@mipmap/icon_delete" />
+
+</LinearLayout>

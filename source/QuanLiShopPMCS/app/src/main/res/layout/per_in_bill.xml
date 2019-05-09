@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    android:focusableInTouchMode="true"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <AutoCompleteTextView
+        android:id="@+id/per_auto"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_weight="0.00"
+        android:background="@drawable/rec_shape"
+        android:completionThreshold="1"
+        android:ems="10"
+        android:hint="Nhập tên khách hàng của hóa đơn"
+        android:inputType="textPersonName"
+        android:paddingLeft="6dp"
+        android:textColor="#000000"
+        android:textSize="18sp" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="103dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="3dp"
+        android:drawingCacheQuality="high"
+        app:srcCompat="@drawable/people" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.00"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="121dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:paddingLeft="6dp"
+                android:text="Tên"
+                android:textAlignment="textStart"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textView6"
+                android:gravity="center"
+                android:paddingLeft="6dp"
+                android:text="Số điện thoại"
+                android:textAlignment="textStart"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textView10"
+                android:gravity="center"
+                android:paddingLeft="6dp"
+                android:text="Mail"
+                android:textAlignment="textStart"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textView9"
+                android:gravity="center"
+                android:paddingLeft="6dp"
+                android:text="Địa chỉ"
+                android:textAlignment="textStart"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textView11"
+                android:gravity="center"
+                android:paddingLeft="6dp"
+                android:text="Loại"
+                android:textAlignment="textStart"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textView12"
+                android:gravity="center"
+                android:paddingLeft="6dp"
+                android:text="Ghi chú"
+                android:textAlignment="textStart"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/per_name"
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                android:layout_alignStart="@+id/per_type"
+                android:layout_below="@+id/per_type"
+                android:layout_marginBottom="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/rec_shape"
+                android:gravity="center"
+                android:paddingLeft="6dp"
+                android:textAlignment="textStart"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/per_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignStart="@+id/per_add"
+                    android:layout_below="@+id/per_add"
+                    android:layout_marginBottom="3dp"
+                    android:layout_marginRight="3dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rec_shape"
+                    android:gravity="center"
+                    android:paddingLeft="6dp"
+                    android:textAlignment="textStart"
+                    android:textColor="#000000"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/btn_bill_get_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@mipmap/icon_call" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/per_mail"
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                android:layout_alignStart="@+id/per_phone"
+                android:layout_below="@+id/per_phone"
+                android:layout_marginBottom="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/rec_shape"
+                android:gravity="center"
+                android:paddingLeft="6dp"
+                android:textAlignment="textStart"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/per_add"
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                android:layout_alignStart="@+id/per_name"
+                android:layout_below="@+id/per_name"
+                android:layout_marginBottom="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/rec_shape"
+                android:gravity="center"
+                android:paddingLeft="6dp"
+                android:textAlignment="textStart"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/per_type"
+                android:layout_width="match_parent"
+                android:layout_height="34dp"
+                android:layout_alignStart="@+id/per_note"
+                android:layout_below="@+id/per_note"
+                android:layout_marginBottom="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/rec_shape"
+                android:gravity="center"
+                android:paddingLeft="6dp"
+                android:textAlignment="textStart"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/per_note"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginTop="3dp"
+                android:layout_toEndOf="@+id/textView9"
+                android:background="@drawable/rec_shape"
+                android:gravity="top"
+                android:lineSpacingExtra="10sp"
+                android:paddingBottom="6dp"
+                android:paddingLeft="6dp"
+                android:paddingTop="3dp"
+                android:scrollbars="vertical"
+                android:textAlignment="viewStart"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

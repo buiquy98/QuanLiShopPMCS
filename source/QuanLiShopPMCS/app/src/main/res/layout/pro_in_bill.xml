@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="0dp"
+    android:orientation="vertical"
+    android:focusableInTouchMode="true"
+    android:weightSum="1">
+
+    <AutoCompleteTextView
+        android:id="@+id/mer_auto"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_weight="0.00"
+        android:background="@drawable/rec_shape"
+        android:completionThreshold="1"
+        android:ems="10"
+        android:hint="Nhập tên sản phẩm thêm vào hóa đơn"
+        android:inputType="textPersonName"
+        android:paddingLeft="6dp"
+        android:textColor="#000000"
+        android:textSize="18sp" />
+
+    <ListView
+        android:id="@+id/mer_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_weight="1"
+        android:background="@drawable/rec_shape" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/darker_gray"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_bill_detail_more"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:background="@mipmap/icon_up" />
+
+        <Button
+            android:id="@+id/btn_bill_detail_less"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_weight="0.00"
+            android:background="@mipmap/icon_down" />
+
+        <TextView
+            android:id="@+id/text_bill_price"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="0đ"
+            android:textAlignment="textEnd"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/bill_detail_container"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_weight="0.00"
+        android:background="#e0e0e0"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/bill_time"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:text="TextView"
+                android:textAlignment="textStart"
+                android:textColor="#000000"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Chiết khấu(khoảng tiền):" />
+
+            <EditText
+                android:id="@+id/bill_offpr"
+                android:layout_width="160dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:inputType="number"
+                android:paddingLeft="10dp"
+                android:textAlignment="textStart" />
+
+            <Button
+                android:id="@+id/btn_offpr"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Cập nhật"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Chiết khấu(%):" />
+
+            <EditText
+                android:id="@+id/bill_offpercent"
+                android:layout_width="160dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:inputType="number"
+                android:paddingLeft="10dp"
+                android:textAlignment="textStart" />
+
+            <Button
+                android:id="@+id/btn_offpe"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Cập nhật"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

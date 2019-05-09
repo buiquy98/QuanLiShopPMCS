@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="5dp">
+
+    <TextView
+        android:id="@+id/pitextView1"
+        android:layout_width="157dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:paddingLeft="10dp"
+        android:text="TextView"
+        android:textColor="#000"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="10dp"
+        tools:layout_editor_absoluteY="1dp" />
+
+    <TextView
+        android:id="@+id/textView19"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:text="SĐT :"
+        android:layout_below="@+id/pitextView1"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/pitextView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textColor="#000000"
+        android:layout_below="@+id/pitextView1"
+        android:layout_toEndOf="@+id/textView19" />
+
+    <TextView
+        android:id="@+id/textView31"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="Loại :"
+        android:layout_below="@+id/textView19"
+        android:layout_alignStart="@+id/textView19" />
+
+    <TextView
+        android:id="@+id/pitextView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textColor="#000000"
+        android:layout_below="@+id/pitextView2"
+        android:layout_toEndOf="@+id/textView31" />
+
+    <TextView
+        android:id="@+id/textView38"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="Địa chỉ :"
+        android:layout_below="@+id/textView31"
+        android:layout_alignStart="@+id/textView31" />
+
+    <TextView
+        android:id="@+id/pitextView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/pitextView3"
+        android:layout_toEndOf="@+id/textView38"
+        android:text="TextView"
+        android:textColor="#000000" />
+
+</RelativeLayout>

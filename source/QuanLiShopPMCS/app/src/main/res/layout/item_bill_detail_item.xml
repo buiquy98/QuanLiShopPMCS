@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/item_billdt_name"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:text="TextView"
+        android:textColor="#000000"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/useless100"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="17dp"
+        android:text="SL:"
+        android:layout_alignBaseline="@+id/item_billdt_name"
+        android:layout_alignBottom="@+id/item_billdt_name"
+        android:layout_toEndOf="@+id/item_billdt_name" />
+
+    <TextView
+        android:id="@+id/item_billdt_amount"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/useless100"
+        android:layout_alignBottom="@+id/useless100"
+        android:layout_toEndOf="@+id/useless100"
+        android:text="TextView"
+        android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/item_billdt_minipr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/item_billdt_amount"
+        android:layout_alignBottom="@+id/item_billdt_amount"
+        android:layout_marginStart="23dp"
+        android:layout_toEndOf="@+id/item_billdt_amount"
+        android:text="TextView" />
+
+</RelativeLayout>
