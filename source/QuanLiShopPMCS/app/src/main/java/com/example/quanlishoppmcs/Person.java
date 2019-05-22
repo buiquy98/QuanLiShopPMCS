@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 public class Person implements Serializable {
     private int id;
-    private String code;
     private String name;
     private String phone;
     private String add;
@@ -16,7 +15,6 @@ public class Person implements Serializable {
 
     public Person( String name, String phone, String add, String mail, String type, String note) {
         this.id = -1;
-        // this.code = code;
         this.name = name;
         this.phone = phone;
         this.add = add;
@@ -27,7 +25,6 @@ public class Person implements Serializable {
 
     public Person(int id, String name, String phone, String add, String mail, String type, String note) {
         this.id = id;
-        //  this.code = code;
         this.name = name;
         this.phone = phone;
         this.add = add;
@@ -39,8 +36,6 @@ public class Person implements Serializable {
     public int getId() {return id;}
     public void setId(int id) {this.id = id;}
 
-    //  public String getCode() {return code;}
-    //  public void setCode(String code) {this.code = code;}
 
     public String getName() {return name;}
     public void setName(String name) {this.name = name;}
