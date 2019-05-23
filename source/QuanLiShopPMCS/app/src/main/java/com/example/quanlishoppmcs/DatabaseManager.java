@@ -48,10 +48,10 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     //Bill tag
     private static final String CODEBi = "billcode"; //code bill
-    private static final String BiTIME = "billtime"; //ngay bill
+    private static final String BiTIME = "billTime"; //ngay bill
     private static final String BiAMOUNT = "billamount"; //so luong sp trong chi tiet hoa don
-    private static final String BiOFFPER = "billoffpercent";
-    private static final String BiOFFPRI = "billoffprice";
+    private static final String BioffPerR = "billoffPerrcent";
+    private static final String BioffPriiI = "billoffPriiice";
     private static final String BiPRICE = "billprice";
 
 
@@ -123,8 +123,8 @@ public class DatabaseManager extends SQLiteOpenHelper {
                 ID + " integer primary key, " +
                 CODEPe + " integer, " +
                 PeNAME + " TEXT, " +
-                BiOFFPER + " integer, " +
-                BiOFFPRI + " integer, " +
+                BioffPerR + " integer, " +
+                BioffPriiI + " integer, " +
                 BiPRICE + " integer, " +
                 BiTIME + " TEXT)";
         db.execSQL(sqlQuery);
@@ -218,16 +218,16 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return t;
     }
 
-    public void addBill(int codeper, String pname,int offpe,int offpr,int billpr, String billtime){
+    public void addBill(int codeper, String pname,int offPer,int offPrii,int billpr, String billTime){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(ID,maxBillId()+1);
         values.put(CODEPe,codeper);
         values.put(PeNAME,pname);
-        values.put(BiOFFPER,offpe);
-        values.put(BiOFFPRI,offpr);
+        values.put(BioffPerR,offPer);
+        values.put(BioffPriiI,offPrii);
         values.put(BiPRICE,billpr);
-        values.put(BiTIME,billtime);
+        values.put(BiTIME,billTime);
 
         db.insert(TABLE_BILL,null,values);
         db.close();
@@ -244,15 +244,15 @@ public class DatabaseManager extends SQLiteOpenHelper {
     public Bill getBillById(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
         String[] s = new String[]{String.valueOf(id)};
-        Cursor cursor = db.query(TABLE_BILL, new String[]{ID, CODEPe, PeNAME, BiOFFPER, BiOFFPRI, BiPRICE, BiTIME}, ID + "=?", s, null, null, null);
+        Cursor cursor = db.query(TABLE_BILL, new String[]{ID, CODEPe, PeNAME, BioffPerR, BioffPriiI, BiPRICE, BiTIME}, ID + "=?", s, null, null, null);
         Bill bill = new Bill();
         if (cursor != null) {
             cursor.moveToFirst();
             bill.setId(cursor.getInt(0));
             bill.setCodePe(cursor.getInt(1));
             bill.setPeName(cursor.getString(2));
-            bill.setOffPer(cursor.getInt(3));
-            bill.setOffPri(cursor.getInt(4));
+            bill.setoffPerr(cursor.getInt(3));
+            bill.setoffPriii(cursor.getInt(4));
             bill.setBillPri(cursor.getInt(5));
             bill.setBillTime(cursor.getString(6));
         }
@@ -261,8 +261,8 @@ public class DatabaseManager extends SQLiteOpenHelper {
             bill.setId(0);
             bill.setCodePe(0);
             bill.setPeName("");
-            bill.setOffPri(0);
-            bill.setOffPer(0);
+            bill.setoffPriii(0);
+            bill.setoffPerr(0);
             bill.setBillPri(0);
             bill.setBillTime("");
         }
@@ -281,8 +281,8 @@ public class DatabaseManager extends SQLiteOpenHelper {
                 bill.setId(cursor.getInt(0));
                 bill.setCodePe(cursor.getInt(1));
                 bill.setPeName(cursor.getString(2));
-                bill.setOffPer(cursor.getInt(3));
-                bill.setOffPri(cursor.getInt(4));
+                bill.setoffPerr(cursor.getInt(3));
+                bill.setoffPriii(cursor.getInt(4));
                 bill.setBillPri(cursor.getInt(5));
                 bill.setBillTime(cursor.getString(6));
                 list.add(bill);
@@ -296,15 +296,15 @@ public class DatabaseManager extends SQLiteOpenHelper {
     public List<Bill> getAllBill(){
         List<Bill> list = new ArrayList<Bill>();
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.query(TABLE_BILL, new String[]{ID, CODEPe, PeNAME, BiOFFPER, BiOFFPRI, BiPRICE, BiTIME}, null,null, null, null, null);
+        Cursor cursor = db.query(TABLE_BILL, new String[]{ID, CODEPe, PeNAME, BioffPerR, BioffPriiI, BiPRICE, BiTIME}, null,null, null, null, null);
         if (cursor.moveToFirst()) {
             do {
                 Bill bill = new Bill();
                 bill.setId(cursor.getInt(0));
                 bill.setCodePe(cursor.getInt(1));
                 bill.setPeName(cursor.getString(2));
-                bill.setOffPer(cursor.getInt(3));
-                bill.setOffPri(cursor.getInt(4));
+                bill.setoffPerr(cursor.getInt(3));
+                bill.setoffPriii(cursor.getInt(4));
                 bill.setBillPri(cursor.getInt(5));
                 bill.setBillTime(cursor.getString(6));
                 list.add(bill);
@@ -839,7 +839,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return t;
     }
 
-    //Mer Type
+    //Product Type
     public int maxProductTypeId() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_PRODUCTTYPE, new String[]{ID}, null, null, null, null, null);

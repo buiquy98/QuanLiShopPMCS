@@ -126,7 +126,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/btn_dell_pro_in_bill"
+        android:id="@+id/btn_del_pro_in_bill"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="@mipmap/icon_delete" />

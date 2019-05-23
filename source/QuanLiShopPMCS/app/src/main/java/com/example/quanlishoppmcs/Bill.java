@@ -4,8 +4,8 @@ public class Bill {
     private int id;
     private int codePe;
     private String peName;
-    private int offPer;
-    private int offPri;
+    private int offPerr;
+    private int offPriii;
     private int billPri;
     private String billTime;
 
@@ -35,18 +35,18 @@ public class Bill {
         this.peName = pName;
     }
 
-    public int getOffPer() {
-        return offPer;
+    public int getoffPerr() {
+        return offPerr;
     }
 
-    public void setOffPer(int offP) {
-        this.offPer = offP;
+    public void setoffPerr(int offP) {
+        this.offPerr = offP;
     }
 
-    public int getOffPri() { return offPri;
+    public int getoffPriii() { return offPriii;
     }
 
-    public void setOffPri(int offP) { this.offPri = offP;
+    public void setoffPriii(int offP) { this.offPriii = offP;
     }
 
     public int getBillPrir() {

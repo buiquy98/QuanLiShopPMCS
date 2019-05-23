@@ -1,8 +1,6 @@
 package com.example.quanlishoppmcs;
 
-/**
- * Created by Alviss on 12/26/2017.
- */
+
 
 public class BillItem {
     public int codepr;

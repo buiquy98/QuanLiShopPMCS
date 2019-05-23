@@ -9,7 +9,7 @@
     android:weightSum="1">
 
     <AutoCompleteTextView
-        android:id="@+id/mer_auto"
+        android:id="@+id/pro_auto"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginLeft="5dp"
@@ -108,7 +108,7 @@
                 android:text="Chiết khấu(khoảng tiền):" />
 
             <EditText
-                android:id="@+id/bill_offpr"
+                android:id="@+id/bill_offPri"
                 android:layout_width="160dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -117,7 +117,7 @@
                 android:textAlignment="textStart" />
 
             <Button
-                android:id="@+id/btn_offpr"
+                android:id="@+id/btn_offPri"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="Cập nhật"
@@ -136,7 +136,7 @@
                 android:text="Chiết khấu(%):" />
 
             <EditText
-                android:id="@+id/bill_offpercent"
+                android:id="@+id/bill_offPercent"
                 android:layout_width="160dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -145,7 +145,7 @@
                 android:textAlignment="textStart" />
 
             <Button
-                android:id="@+id/btn_offpe"
+                android:id="@+id/btn_offPer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="Cập nhật"

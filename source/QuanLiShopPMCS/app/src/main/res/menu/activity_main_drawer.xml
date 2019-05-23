@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Hoạt động bán hàng">
+        <menu>
+            <item
+                android:id="@+id/nav_bill_detail"
+                android:icon="@mipmap/nav_menu_bill_add"
+                android:title="Lập Hóa Đơn" />
+        </menu>
+    </item>
+    <item android:title="Quản lý">
+        <menu>
+            <item
+                android:id="@+id/nav_product"
+                android:icon="@mipmap/nav_menu_product"
+                android:title="Sản Phẩm" />
+            <item
+                android:id="@+id/nav_person"
+                android:icon="@mipmap/nav_menu_person"
+                android:title="Khách Hàng" />
+            <item
+                android:id="@+id/nav_bill"
+                android:icon="@mipmap/nav_menu_list_bill"
+                android:title="Hóa Đơn" />
+        </menu>
+    </item>
+
+
+</menu>
