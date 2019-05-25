@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
@@ -45,6 +46,33 @@ public class MainActivity extends AppCompatActivity
 //        drawer.addDrawerListener(toggle);
 //        toggle.syncState();
 //        navigationView.setNavigationItemSelectedListener(this);
+        this.setTitle("Ứng dụng Quản Lý Shop");//set tilte cho activity_main tương ứng
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        //xử lí navigation view
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        //khoi tao cac fragment
+        listfr = new ArrayList<Fragment>();
+        listfr.add(new FragmentMain());
+
+        //khoi tao database
+        db = new DatabaseManager(this);
+
+        db.close();
+
+        // set up frangment main khi start app
+       FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.area,listfr.get(0));
+        ft.commit();
     }
     //xử lí nút back
     @Override

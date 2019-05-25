@@ -108,17 +108,17 @@ public class FragmentMain extends Fragment implements SomeInterfaces {
         perType = (TextView) view.findViewById(R.id.per_type);
         perNote = (TextView) view.findViewById(R.id.per_note);
         perNote.setMovementMethod(new ScrollingMovementMethod());//tuong tu nhu tren
-        //personInBillReset();
+        personInBillReset();
 
         listView = (ListView) view.findViewById(R.id.mer_list);//list item thuoc hoa don
 
-        //billMoreless();//xu ly khoi tao va thao tac voi nut bam chi tiet hoa don
+        billMoreLess();//xu ly khoi tao va thao tac voi nut bam chi tiet hoa don
 
-        //tabSetup(view);//set up tab
+        tabSetup(view);//set up tab
 
-        //suggestmer(view);//xu ly suggest san pham va add san pham vao danh sach san pham
+        suggestProduct(view);//xu ly suggest san pham va add san pham vao danh sach san pham
 
-        //suggestPerson(view);//xu ly suggest khach hang va cap nhat thong tin khach hang
+        suggestPerson(view);//xu ly suggest khach hang va cap nhat thong tin khach hang
 
         Button btnclean = (Button) view.findViewById(R.id.btn_bill_clear);
         btnclean.setOnClickListener(new View.OnClickListener() {
@@ -200,7 +200,7 @@ public class FragmentMain extends Fragment implements SomeInterfaces {
                 if (!offPri.getText().toString().equals(""))
                     t = Integer.valueOf(offPri.getText().toString());
                 main_bill_offPrii=t;
-                //priceOfBill();
+                priceOfBill();
             }
         });
 
@@ -212,7 +212,7 @@ public class FragmentMain extends Fragment implements SomeInterfaces {
                 if (!offPer.getText().toString().equals(""))
                     t=Integer.valueOf(offPer.getText().toString());
                 main_bill_offPer=t;
-                //priceOfBill();
+                priceOfBill();
             }
         });
     }
@@ -247,7 +247,7 @@ public class FragmentMain extends Fragment implements SomeInterfaces {
             tada.amount = item.amountbi;
             listpro.add(tada);
         }
-        //priceOfBill();
+        priceOfBill();
 
         adapter = new ProductInBillAdapter(view.getContext(),listpro,this);
         listView.setAdapter(adapter);
