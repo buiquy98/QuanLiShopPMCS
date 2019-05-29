@@ -1,4 +1,4 @@
-package com.example.quanlishoppmcs;
+package com.example.cnpmcs.quanlishoppmcs;
 
 public interface SomeInterfaces {
     public void updateToBillDetailTemp(int codepro,int billamount);

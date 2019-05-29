@@ -1,4 +1,4 @@
-package com.example.quanlishoppmcs;
+package com.example.cnpmcs.quanlishoppmcs;
 
 public class Bill {
     private int id;

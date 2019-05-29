@@ -1,9 +1,11 @@
-package com.example.quanlishoppmcs;
+package com.example.cnpmcs.quanlishoppmcs;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -15,16 +17,16 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Product_add extends Activity {
+public class Product_edit extends Activity {
     protected DatabaseManager db;
+    protected int idt=0;
+    protected Product mainmer;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pro_edit_add);
-
-        //set up toolbar phu cho activity, toolbar khong lien ket vs toolbar chinh cua ung dung
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_mer_add);
-        toolbar.setTitle("Thêm Sản phẩm");
+        toolbar.setTitle("Thông tin Sản phẩm");
         toolbar.setTitleTextColor(Color.parseColor("#ffffff"));
 
         db = DatabaseManager.getInstance(getBaseContext());
@@ -35,34 +37,55 @@ public class Product_add extends Activity {
         final TextView Merprice = (TextView) findViewById(R.id.mer_add_price);
         final TextView Mercount = (TextView) findViewById(R.id.mer_add_count);
         final TextView Mernote = (TextView) findViewById(R.id.mer_add_note);
+        final Spinner Mersell = (Spinner) findViewById(R.id.spinner_mer_sell);
+        final Spinner Mertype = (Spinner) findViewById(R.id.spinner_mer_type);
+        List<String> selllist = new ArrayList<String>();
+        selllist.add("Có");
+        selllist.add("Không");
+        Mersell.setAdapter(new ArrayAdapter(this,R.layout.item_spinner,selllist));
+
+        List<String> typelist = new ArrayList<String>();
+        typelist.addAll(db.getProductType());
+        typelist.add("");
+        Mertype.setAdapter(new ArrayAdapter(this,R.layout.item_spinner,typelist));
 
         Button btnt = (Button) findViewById(R.id.btn_second_mer);
-        btnt.setVisibility(btnt.GONE);
+        btnt.setText("Xóa");
 
+        Button btnadd = (Button) findViewById(R.id.btn_mer_add_ok);
+        btnadd.setText("Cập nhật");
         Button tempthing = (Button) findViewById(R.id.btn_cancel_mer);
+
         tempthing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Product_add.super.onBackPressed();
+                Product_edit.super.onBackPressed();
             }
         });
 
-        final Spinner Mersell = (Spinner) findViewById(R.id.spinner_mer_sell);
-        List<String> sell = new ArrayList<String>();
-        sell.add("Có"); sell.add("Không");
-        Mersell.setAdapter(new ArrayAdapter(this,R.layout.item_spinner,sell));
 
-        final Spinner Mertype = (Spinner) findViewById(R.id.spinner_mer_type);
-        List<String> type = new ArrayList<String>();
-        type.addAll(db.getProductType());
-        if (type.size()==0) type.add("");
-        Mertype.setAdapter(new ArrayAdapter(this,R.layout.item_spinner,type));
 
-        Button btnadd = (Button) findViewById(R.id.btn_mer_add_ok);
+        if (getIntent().getExtras() != null){
+            idt = getIntent().getIntExtra("ID",0);
+            mainmer = db.getProductById(idt);
+            Mername.setText(mainmer.getName());
+            Mersum.setText(String.valueOf(mainmer.getSum()));
+            if (mainmer.getSell()==0)
+                Mersell.setSelection(((ArrayAdapter)Mersell.getAdapter()).getPosition("Không"));
+            else
+                Mersell.setSelection(((ArrayAdapter)Mersell.getAdapter()).getPosition("Có"));
+            Merbuy.setText(String.valueOf(mainmer.getBuy()));
+            Merprice.setText(String.valueOf(mainmer.getPrice()));
+            Mertype.setSelection(((ArrayAdapter)Mertype.getAdapter()).getPosition(mainmer.getType()));
+            Mercount.setText(mainmer.getCount());
+            Mernote.setText(mainmer.getNote());
+        }
+
         btnadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (Mername.getText().toString().equals("")) {Toast.makeText(view.getContext(), "Tên để trống, xin nhập", Toast.LENGTH_SHORT).show(); }
+                if (Mername.getText().toString().equals("")) {
+                    Toast.makeText(view.getContext(), "Tên để trống, xin nhập", Toast.LENGTH_SHORT).show(); }
                 else if (Mersum.getText().toString().equals("")) {Toast.makeText(view.getContext(), "Số lượng để trống, xin nhập", Toast.LENGTH_SHORT).show(); }
                 else if (Merbuy.getText().toString().equals("")) {Toast.makeText(view.getContext(), "Giá vốn để trống, xin nhập", Toast.LENGTH_SHORT).show(); }
                 else if (Merprice.getText().toString().equals("")) {Toast.makeText(view.getContext(), "Giá bán để trống, xin nhập", Toast.LENGTH_SHORT).show(); }
@@ -74,11 +97,12 @@ public class Product_add extends Activity {
                     for (Product item : listMer){
                         if (item.getName().toUpperCase().equals(Mername.getText().toString().toUpperCase())){ check=1; break;}
                     }
+                    if (check==1&&mainmer.getName().equals(Mername.getText().toString())) check=0;
                     if (check==0)
                     {
                         Product temp = new Product();
-
                         temp.setName(Mername.getText().toString());
+
                         if (!Mersum.getText().toString().equals(""))
                             temp.setSum(Integer.valueOf(Mersum.getText().toString()));
                         if (Mersell.getSelectedItem().toString().equals("Có"))
@@ -92,7 +116,9 @@ public class Product_add extends Activity {
                         temp.setCount(Mercount.getText().toString());
                         temp.setNote(Mernote.getText().toString());
 
-                        db.addProduct(temp);
+                        // db.addMer(temp);
+                        //Toast.makeText(view.getContext(), "Thêm thành công", Toast.LENGTH_SHORT).show();
+                        db.updateProduct(idt,temp);
                         db.close();
                         setResult(100);
                         finish();
@@ -103,6 +129,32 @@ public class Product_add extends Activity {
                 }
             }
         });
+
+        final DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        db.delProduct(idt);
+                        setResult(200);
+                        finish();
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+
+                        break;
+                }
+            }
+        };
+
+        btnt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                builder.setMessage("Bạn có muốn xóa sản phẩm này?").setPositiveButton("Có", dialogClickListener)
+                        .setNegativeButton("Không", dialogClickListener).show();
+            }
+        });
     }
 
     @Override
@@ -111,3 +163,4 @@ public class Product_add extends Activity {
         finish();
     }
 }
+

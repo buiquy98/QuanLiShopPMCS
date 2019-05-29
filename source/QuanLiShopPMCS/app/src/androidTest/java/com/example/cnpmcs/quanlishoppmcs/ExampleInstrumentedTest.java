@@ -1,4 +1,4 @@
-package com.example.quanlishoppmcs;
+package com.example.cnpmcs.quanlishoppmcs;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.quanlishoppmcs", appContext.getPackageName());
+        assertEquals("com.example.cnpmcs.quanlishoppmcs", appContext.getPackageName());
     }
 }

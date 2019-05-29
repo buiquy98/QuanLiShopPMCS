@@ -1,4 +1,4 @@
-package com.example.quanlishoppmcs;
+package com.example.cnpmcs.quanlishoppmcs;
 
 import java.io.Serializable;
 
