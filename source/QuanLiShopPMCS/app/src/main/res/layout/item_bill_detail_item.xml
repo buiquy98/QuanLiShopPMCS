@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/item_billdt_name"
+        android:id="@+id/item_billdetailtemp_name"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
@@ -19,12 +19,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="17dp"
         android:text="SL:"
-        android:layout_alignBaseline="@+id/item_billdt_name"
-        android:layout_alignBottom="@+id/item_billdt_name"
-        android:layout_toEndOf="@+id/item_billdt_name" />
+        android:layout_alignBaseline="@+id/item_billdetailtemp_name"
+        android:layout_alignBottom="@+id/item_billdetailtemp_name"
+        android:layout_toEndOf="@+id/item_billdetailtemp_name" />
 
     <TextView
-        android:id="@+id/item_billdt_amount"
+        android:id="@+id/item_billdetailtemp_amount"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/useless100"
@@ -37,10 +37,10 @@
         android:id="@+id/item_billdt_minipr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/item_billdt_amount"
-        android:layout_alignBottom="@+id/item_billdt_amount"
+        android:layout_alignBaseline="@+id/item_billdetailtemp_amount"
+        android:layout_alignBottom="@+id/item_billdetailtemp_amount"
         android:layout_marginStart="23dp"
-        android:layout_toEndOf="@+id/item_billdt_amount"
+        android:layout_toEndOf="@+id/item_billdetailtemp_amount"
         android:text="TextView" />
 
 </RelativeLayout>

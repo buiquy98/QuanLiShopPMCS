@@ -29,7 +29,7 @@
         android:background="@drawable/rec_shape" />
 
     <TextView
-        android:id="@+id/text_bill_item_pername"
+        android:id="@+id/text_bill_item_personname"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginBottom="5dp"
@@ -42,7 +42,7 @@
         android:textColor="#000000" />
 
     <TextView
-        android:id="@+id/text_bill_item_offPrii"
+        android:id="@+id/text_bill_item_offprice"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginBottom="5dp"
@@ -55,7 +55,7 @@
         android:textColor="#000000" />
 
     <TextView
-        android:id="@+id/text_bill_item_offPer"
+        android:id="@+id/text_bill_item_offpercent"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginBottom="5dp"
@@ -94,7 +94,7 @@
         android:textColor="#000000" />
 
     <Button
-        android:id="@+id/btn_back_billdt"
+        android:id="@+id/btn_back_billdetailtemp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Quay lại" />

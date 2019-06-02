@@ -9,12 +9,13 @@ import android.widget.TextView;
 
 import java.util.List;
 
+
 public class ProductAllAdapter extends BaseAdapter {
     private List<Product> listData;
     private LayoutInflater layoutInflater;
     private Context context;
 
-    public ProductAllAdapter(Context aContext,  List<Product> listData) {
+    public ProductAllAdapter(Context aContext, List<Product> listData) {
         this.context = aContext;
         this.listData = listData;
         layoutInflater = LayoutInflater.from(aContext);
@@ -51,17 +52,17 @@ public class ProductAllAdapter extends BaseAdapter {
         }
         else holder = (ViewHolder) convertView.getTag();
 
-        Product pro = this.listData.get(position);
-        holder.nameView.setText(pro.getName());
-        if (pro.getSell()==1)
+        Product product = this.listData.get(position);
+        holder.nameView.setText(product.getName());
+        if (product.getSell()==1)
             holder.sellView.setText("Đang bán");
         else
             holder.sellView.setText("Chưa bắt đầu bán");
-        holder.sumView.setText(String.valueOf(pro.getSum() + " " + pro.getCount()));
+        holder.sumView.setText(String.valueOf(product.getSum() + " " + product.getCount()));
         //String.format("%,d", Long.parseLong(view.toString()));
-        String d = String.valueOf(pro.getPrice());
+        String d = String.valueOf(product.getPrice());
         holder.priceView.setText(String.format("%,d", Long.parseLong(d)));
-        holder.typeView.setText(String.valueOf(pro.getType()));
+        holder.typeView.setText(String.valueOf(product.getType()));
         return convertView;
     }
 
@@ -73,4 +74,3 @@ public class ProductAllAdapter extends BaseAdapter {
         TextView typeView;
     }
 }
-

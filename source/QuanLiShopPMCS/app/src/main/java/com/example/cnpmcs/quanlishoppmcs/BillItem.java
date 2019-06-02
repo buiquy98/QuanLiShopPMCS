@@ -1,13 +1,11 @@
 package com.example.cnpmcs.quanlishoppmcs;
 
-
-
 public class BillItem {
-    public int codepr;
-    public int amountbi;
+    public int codepro;
+    public int amountb;
 
-    public BillItem(int a, int b){
-        this.codepr = a;
-        this.amountbi = b;
+    public BillItem(int a,int b){
+        this.codepro = a;
+        this.amountb = b;
     }
 }

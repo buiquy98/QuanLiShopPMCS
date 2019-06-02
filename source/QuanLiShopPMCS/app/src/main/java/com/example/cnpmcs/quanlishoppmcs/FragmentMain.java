@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
 
 public class FragmentMain extends Fragment implements SomeInterfaces {
     protected View myView;
@@ -36,87 +38,61 @@ public class FragmentMain extends Fragment implements SomeInterfaces {
     protected ProductInBillAdapter adapter;//adapter cua listview
     protected int main_bill_code;//ma hoa don
     protected int main_bill_pcode;//ma khach hang
-    protected int main_bill_offPrii=0;//giam gia luong tien
-    protected int main_bill_offPer=0;//giam gia %
+    protected int main_bill_offpr=0;//giam gia luong tien
+    protected int main_bill_offpe=0;//giam gia %
     protected int main_bill_price=0;//tong tien hoa don
     protected String main_bill_time;//thoi gian hoa don
-    protected TextView billPrice;//gia tien hoa don
+    protected TextView billprice;//gia tien hoa don
     protected EditText billTime;//thoi gian lap hoa don
 
-    protected LinearLayout billMore;
-    protected Button btnBillOffPri;
-    protected TextView offPri;
-    protected Button btnBillOffPer;
-    protected TextView offPer;
-    protected Button btnBillLess;
-    protected Button btnbillMore;
+    protected LinearLayout billmore;
+    protected Button btnbilloffpr;
+    protected TextView offPrice;
+    protected Button btnbilloffpe;
+    protected TextView offPercent;
+    protected Button btnbillless;
+    protected Button btnbillmore;
 
-    protected TextView perName;
-    protected TextView perPhone;
-    protected TextView perAdd;
-    protected TextView perMail;
-    protected TextView perType;
-    protected TextView perNote;
-
-    //cập nhật số lượng của sản phẩm thuộc bill temp
-    @Override
-    public void updateToBillDetailTemp(int codepro, int billamount) {
-        DatabaseManager ac = new DatabaseManager(myView.getContext());
-        ac.updBillDetailTempAmount(codepro,billamount);
-        ac.close();
-        priceOfBill();
-    }
-
-    //xóa mã bill khỏi table bill temp
-    @Override
-    public void delBillDetailTempCodeBill(int codebill) {
-        DatabaseManager ac = new DatabaseManager(myView.getContext());
-        ac.delBillDetailTempCodeBi(codebill);
-        ac.close();
-        priceOfBill();
-    }
-
-    //xóa masp khỏi table sản phẩm temp
-    @Override
-    public void delBillDetailTempCodeProduct(int codepro) {
-        DatabaseManager ac = new DatabaseManager(myView.getContext());
-        ac.delBillDetailCodePr(codepro);
-        ac.close();
-        priceOfBill();
-    }
-
+    protected TextView pername;
+    protected TextView perphone;
+    protected TextView peradd;
+    protected TextView permail;
+    protected TextView pertype;
+    protected TextView pernote;
+    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         myView = inflater.inflate(R.layout.layout_frag_main, container,false);
         return myView;
     }
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         db = new DatabaseManager(getActivity());//goi lai database tu main activity
         getActivity().setTitle("Lập hóa đơn");//set title
-        main_bill_code = db.maxBillId() + 1;//lay so hoa don moi nhat
+        main_bill_code = db.maxBillId()+1;//lay so hoa don moi nhat
         //khoi tao text view title hoa don
         maintext = (TextView) view.findViewById(R.id.text_bill_name);
 
         //khoi tao cac text view ve thong tin khach hang
-        perName = (TextView) view.findViewById(R.id.per_name);
-        perPhone = (TextView) view.findViewById(R.id.per_phone);
-        perAdd = (TextView) view.findViewById(R.id.per_add);
-        perAdd.setMovementMethod(new ScrollingMovementMethod());//set scroll bar neu du lieu dai hon view
-        perMail = (TextView) view.findViewById(R.id.per_mail);
-        perType = (TextView) view.findViewById(R.id.per_type);
-        perNote = (TextView) view.findViewById(R.id.per_note);
-        perNote.setMovementMethod(new ScrollingMovementMethod());//tuong tu nhu tren
+        pername =(TextView) view.findViewById(R.id.per_name);
+        perphone =(TextView) view.findViewById(R.id.per_phone);
+        peradd =(TextView) view.findViewById(R.id.per_add);
+        peradd.setMovementMethod(new ScrollingMovementMethod());//set scroll bar neu du lieu dai hon view
+        permail =(TextView) view.findViewById(R.id.per_mail);
+        pertype =(TextView) view.findViewById(R.id.per_type);
+        pernote =(TextView) view.findViewById(R.id.per_note);
+        pernote.setMovementMethod(new ScrollingMovementMethod());//tuong tu nhu tren
         personInBillReset();
 
-        listView = (ListView) view.findViewById(R.id.mer_list);//list item thuoc hoa don
+        listView = (ListView) view.findViewById(R.id.pro_list);//list item thuoc hoa don
 
-        billMoreLess();//xu ly khoi tao va thao tac voi nut bam chi tiet hoa don
+        billmoreless();//xu ly khoi tao va thao tac voi nut bam chi tiet hoa don
 
-        tabSetup(view);//set up tab
+        tabsetup(view);//set up tab
 
-        suggestProduct(view);//xu ly suggest san pham va add san pham vao danh sach san pham
+        suggestPro(view);//xu ly suggest san pham va add san pham vao danh sach san pham
 
         suggestPerson(view);//xu ly suggest khach hang va cap nhat thong tin khach hang
 
@@ -127,103 +103,146 @@ public class FragmentMain extends Fragment implements SomeInterfaces {
                 delBillDetailTempCodeBill(0);
                 listpro.clear();
                 List<BillItem> billItemList = db.getBillDetailTempItem(0);
-                for (BillItem item : billItemList) {
-                    Product tada = db.getProductById(item.codepr);
-                    tada.amount = item.amountbi;
+                for (BillItem item :billItemList){
+                    Product tada = db.getProductById(item.codepro);
+                    tada.amount = item.amountb;
                     listpro.add(tada);
                 }
                 adapter.notifyDataSetChanged();
                 main_bill_code = db.maxBillId() + 1;
                 main_bill_pcode = 0;
-                main_bill_offPrii = 0;
-                main_bill_offPer = 0;
+                main_bill_offpr = 0;
+                main_bill_offpe = 0;
                 main_bill_time = "";
-                //priceOfBill();
+                priceOfBill();
                 maintext.setText("Hóa đơn số " + String.valueOf(main_bill_code) + " - ");
-                perName.setText("");
-                perPhone.setText("");
-                perAdd.setText("");
-                perMail.setText("");
-                perType.setText("");
-                perNote.setText("");
-                offPer.setText("");
-                offPri.setText("");
-                SimpleDateFormat format = new SimpleDateFormat("HH:mm dd-MM-yyyy", Locale.getDefault());
+                pername.setText("");
+                perphone.setText("");
+                peradd.setText("");
+                permail.setText("");
+                pertype.setText("");
+                pernote.setText("");
+                offPercent.setText("");
+                offPrice.setText("");
+                SimpleDateFormat format= new SimpleDateFormat("HH:mm dd-MM-yyyy", Locale.getDefault());
                 Date currentTime = Calendar.getInstance().getTime();
                 billTime.setText(format.format(currentTime));
             }
         });
+
+        Button btnsave = (Button) view.findViewById(R.id.btn_bill_save);
+        btnsave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (main_bill_pcode==0) {Toast.makeText(myView.getContext(),"Chưa nhập thông tin khách hàng",Toast.LENGTH_SHORT).show();}
+                else if (listpro.size()==0) {Toast.makeText(myView.getContext(),"Hóa đơn chưa có sản phẩm",Toast.LENGTH_SHORT).show();}
+                else {
+                    main_bill_time = billTime.getText().toString();
+                    main_bill_code = db.maxBillId() + 1;
+                    String pName = db.getPersonById(main_bill_pcode).getName();
+                    db.addBill(main_bill_pcode,pName,main_bill_offpe,main_bill_offpr,main_bill_price,main_bill_time);
+                    List<BillItem> listitem = db.getBillDetailTempItem(0);
+                    for (BillItem item : listitem) {
+                        db.addBillDetail(main_bill_code, item.codepro, item.amountb);
+                        Product product = db.getProductById(item.codepro);
+                        db.updateProductSum(item.codepro, product.getSum()-item.amountb);
+                        Toast.makeText(myView.getContext(), "Lưu hóa đơn thành công", Toast.LENGTH_SHORT).show();
+                    }
+                    delBillDetailTempCodeBill(0);
+                    listpro.clear();
+                    adapter.notifyDataSetChanged();
+                    main_bill_code = db.maxBillId() + 1;
+                    main_bill_pcode = 0;
+                    main_bill_offpr = 0;
+                    main_bill_offpe = 0;
+                    main_bill_time = "";
+                    maintext.setText("Hóa đơn số " + String.valueOf(main_bill_code) + " - ");
+                    priceOfBill();
+                    pername.setText("");
+                    perphone.setText("");
+                    peradd.setText("");
+                    permail.setText("");
+                    pertype.setText("");
+                    pernote.setText("");
+                    offPercent.setText("");
+                    offPrice.setText("");
+                    SimpleDateFormat format= new SimpleDateFormat("HH:mm dd-MM-yyyy", Locale.getDefault());
+                    Date currentTime = Calendar.getInstance().getTime();
+                    billTime.setText(format.format(currentTime));
+                }
+            }
+        });
     }
 
-    //khởi tạo và xử lí nút bấm giá tiền
-    protected void billMoreLess(){
-        billPrice = (TextView) myView.findViewById(R.id.text_bill_price);//Hiển thị giá tiền
+    //thao tac khoi tao va xy lu nut bam ben canh gia tien
+    protected void billmoreless(){
+        billprice = (TextView) myView.findViewById(R.id.text_bill_price);//<hien thi> gia tien hoa don
 
-        billTime = (EditText) myView.findViewById(R.id.bill_time);//thời gian bill
+        billTime = (EditText) myView.findViewById(R.id.bill_time);//thoi gian cua hoa don
 
-        billMore = (LinearLayout) myView.findViewById(R.id.bill_detail_container);
-        billMore.setVisibility(billMore.GONE);//khởi tạo và set ẩn layout chi tiết phụ
+        billmore = (LinearLayout) myView.findViewById(R.id.bill_detail_container);
+        billmore.setVisibility(billmore.GONE);//khoi tao va set ẩn layout chi tiết phụ
 
-        btnBillLess = (Button) myView.findViewById(R.id.btn_bill_detail_less);
-        btnBillLess.setVisibility(btnBillLess.GONE);//khoi tao va set ẩn nút ẩn chi tiết phụ
+        btnbillless = (Button) myView.findViewById(R.id.btn_bill_detail_less);
+        btnbillless.setVisibility(btnbillless.GONE);//khoi tao va set ẩn nút ẩn chi tiết phụ
 
-        offPri = (TextView) myView.findViewById(R.id.bill_offPri);
-        offPer = (TextView) myView.findViewById(R.id.bill_offPercent);
+        offPrice = (TextView) myView.findViewById(R.id.bill_offprice);
+        offPercent = (TextView) myView.findViewById(R.id.bill_offpercent);
         SimpleDateFormat format= new SimpleDateFormat("HH:mm dd-MM-yyyy", Locale.getDefault());
         Date currentTime = Calendar.getInstance().getTime();
         billTime.setText(format.format(currentTime));
 
-        btnbillMore = (Button) myView.findViewById(R.id.btn_bill_detail_more);
-        btnbillMore.setOnClickListener(new View.OnClickListener() {
+        btnbillmore = (Button) myView.findViewById(R.id.btn_bill_detail_more);
+        btnbillmore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btnbillMore.setVisibility(btnbillMore.GONE);
-                btnBillLess.setVisibility(btnBillLess.VISIBLE);
-                billMore.setVisibility(billMore.VISIBLE);
+                btnbillmore.setVisibility(btnbillmore.GONE);
+                btnbillless.setVisibility(btnbillless.VISIBLE);
+                billmore.setVisibility(billmore.VISIBLE);
             }
         });
 
-        btnBillLess.setOnClickListener(new View.OnClickListener() {
+        btnbillless.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btnBillLess.setVisibility(btnBillLess.GONE);
-                btnbillMore.setVisibility(btnbillMore.VISIBLE);
-                billMore.setVisibility(billMore.GONE);
+                btnbillless.setVisibility(btnbillless.GONE);
+                btnbillmore.setVisibility(btnbillmore.VISIBLE);
+                billmore.setVisibility(billmore.GONE);
             }
         });
 
-        btnBillOffPri = (Button) myView.findViewById(R.id.btn_offPri);
-        btnBillOffPri.setOnClickListener(new View.OnClickListener() {
+        btnbilloffpr = (Button) myView.findViewById(R.id.btn_offprice);
+        btnbilloffpr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int t = 0;
-                if (!offPri.getText().toString().equals(""))
-                    t = Integer.valueOf(offPri.getText().toString());
-                main_bill_offPrii=t;
+                if (!offPrice.getText().toString().equals(""))
+                    t = Integer.valueOf(offPrice.getText().toString());
+                main_bill_offpr=t;
                 priceOfBill();
             }
         });
 
-        btnBillOffPer = (Button) myView.findViewById(R.id.btn_offPer);
-        btnBillOffPer.setOnClickListener(new View.OnClickListener() {
+        btnbilloffpe = (Button) myView.findViewById(R.id.btn_offpercent);
+        btnbilloffpe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int t = 0;
-                if (!offPer.getText().toString().equals(""))
-                    t=Integer.valueOf(offPer.getText().toString());
-                main_bill_offPer=t;
+                if (!offPercent.getText().toString().equals(""))
+                    t=Integer.valueOf(offPercent.getText().toString());
+                main_bill_offpe=t;
                 priceOfBill();
             }
         });
     }
 
-    //khởi tạo và setup tab
-    protected void tabSetup(View view){
-        //khởi tạo tab qua viewid
+    //khoi tao va set up tab
+    protected void tabsetup(View view){
+        //khoi tao tab qua viewid
         tab = (TabHost) view.findViewById(R.id.tabhost);
         tab.setup();
 
-        //thêm tab con vào tab host
+        //them cac tab con vao tab host
         TabHost.TabSpec spec = tab.newTabSpec("Sản Phẩm");
         spec.setContent(R.id.tab);
         spec.setIndicator("Sản Phẩm");
@@ -233,18 +252,20 @@ public class FragmentMain extends Fragment implements SomeInterfaces {
         spec.setContent(R.id.tab2);
         spec.setIndicator("Khách Hàng");
         tab.addTab(spec);
-        //set chiều cao của tab điều khiển
+        //set chieu cao cua tab dieu khien
         tab.getTabWidget().getChildAt(0).getLayoutParams().height = 80;
         tab.getTabWidget().getChildAt(1).getLayoutParams().height = 80;
+
     }
-    // xử lí cập nhật thêm sản phẩm
-    protected void suggestProduct(View view){
+
+    //xu ly cap nhat them san pham
+    protected void suggestPro(View view){
 
         listpro = new ArrayList<Product>(){};
         List<BillItem> billItemList = db.getBillDetailTempItem(0);
         for (BillItem item :billItemList){
-            Product tada = db.getProductById(item.codepr);
-            tada.amount = item.amountbi;
+            Product tada = db.getProductById(item.codepro);
+            tada.amount = item.amountb;
             listpro.add(tada);
         }
         priceOfBill();
@@ -254,7 +275,7 @@ public class FragmentMain extends Fragment implements SomeInterfaces {
 
 
 
-        //xử lí text suggest vào cập nhật danh sách sản phẩm của bill
+        //xu ly text suggest vao cap nhat danh sach san pham cua hoa don
         final List<String> proname2 = new ArrayList<String>(){};
         final List<Product> listtemp = db.getProductSelling();
         for (Product item : listtemp){
@@ -281,7 +302,7 @@ public class FragmentMain extends Fragment implements SomeInterfaces {
                     adapter.notifyDataSetChanged();
                     text.setText("");
                     db.addBillDetailTemp(0,temp.getId(),temp.amount);
-                    //priceOfBill();
+                    priceOfBill();
                 }
                 else {
                     if (listpro.get(id).getSum() > 0) {
@@ -289,15 +310,16 @@ public class FragmentMain extends Fragment implements SomeInterfaces {
                         adapter.notifyDataSetChanged();
                         text.setText("");
                         updateToBillDetailTemp(listpro.get(id).getId(),listpro.get(id).amount);
-                        //priceOfBill();
+                        priceOfBill();
                     }
                 }
             }
         });
     }
-    //xử lí cập nhật khách hàng
+
+    //xu ly cap nhat khach hang
     protected void suggestPerson(View view){
-        //xử lí text suggest vào cập nhật danh sách sản phẩm của bill
+        //xu ly text suggest vao cap nhat danh sach san pham cua hoa don
         final List<String> perlist = new ArrayList<String>(){};
         List<Person> list = db.getAllPerson();
         for (Person item : list){
@@ -311,12 +333,12 @@ public class FragmentMain extends Fragment implements SomeInterfaces {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String ten = adapterView.getItemAtPosition(i).toString();
                 Person person = db.getPersonByName(ten.toString());
-                perName.setText(person.getName());
-                perPhone.setText(person.getPhone());
-                perAdd.setText(person.getAdd());
-                perMail.setText(person.getMail());
-                perType.setText(person.getType());
-                perNote.setText(person.getNote());
+                pername.setText(person.getName());
+                perphone.setText(person.getPhone());
+                peradd.setText(person.getAdd());
+                permail.setText(person.getMail());
+                pertype.setText(person.getType());
+                pernote.setText(person.getNote());
                 text.setText("");
                 text.clearFocus();
                 maintext.setText("Hóa đơn số " + String.valueOf(main_bill_code) + " - " +person.getName());
@@ -329,47 +351,70 @@ public class FragmentMain extends Fragment implements SomeInterfaces {
             @Override
             public void onClick(View view) {
                 Intent callIntent = new Intent(Intent.ACTION_DIAL);
-                callIntent.setData(Uri.parse("tel:"+perPhone.getText().toString()));
+                callIntent.setData(Uri.parse("tel:"+perphone.getText().toString()));
                 startActivity(callIntent);
             }
         });
     }
 
-
-    //reset các trường thông tin của khách hàng
+    //reset cac truong cua thong tin khach hang thuoc hoa don
     public void personInBillReset(){
         maintext.setText("Hóa đơn số " + String.valueOf(main_bill_code) + " - ");
         main_bill_pcode = 0;
-        perName.setText("");
-        perPhone.setText("");
-        perAdd.setText("");
-        perMail.setText("");
-        perType.setText("");
-        perNote.setText("");
+        pername.setText("");
+        perphone.setText("");
+        peradd.setText("");
+        permail.setText("");
+        pertype.setText("");
+        pernote.setText("");
     }
 
-
-    //cập nhật tổng tiền trong bill
+    //cap nhat tong tien cua bill
     protected void priceOfBill(){
         int temp =0;
         for (Product item : listpro){
             temp=temp+item.amount*item.getPrice();
         }
 
-        double ttt = (main_bill_offPer/100.00000)*temp;
+        double ttt = (main_bill_offpe/100.00000)*temp;
         int dto = (int) ttt;
         temp=temp-dto;
 
-        temp=temp-main_bill_offPer;
+        temp=temp-main_bill_offpr;
 
         main_bill_price=temp;
         String dd = String.valueOf(temp);
 
-        billPrice.setText(String.format("%,d", Long.parseLong(dd))+" đ");
+        billprice.setText(String.format("%,d", Long.parseLong(dd))+" đ");
         if (temp==0)
-            billPrice.setText("0 đ");
+            billprice.setText("0 đ");
     }
 
-    //cập nhật số lượng của sản phẩm thuộc bill temp
+    //cap nhat amount cua san pham thuoc bill tam thoi
+    @Override
+    public void updateToBillDetailTemp(int codemer,int bamount){
+        DatabaseManager ac = new DatabaseManager(myView.getContext());
+        ac.updateBillDetailTempAmount(codemer,bamount);
+        ac.close();
+        priceOfBill();
+    }
 
+    //phuong thuc xoa ma bill khoi table bill tam thoi, thuong la 0, sau nay se update nhieu bill 1 luc
+    @Override
+    public void delBillDetailTempCodeBill(int codebill){
+        DatabaseManager ac = new DatabaseManager(myView.getContext());
+        ac.delBillDetailTempCodeBill(codebill);
+        ac.close();
+        priceOfBill();
+    }
+
+    //phuong thuc xoa ma sp khoi table bill tam thoi
+    @Override
+    public void delBillDetailTempCodeProduct(int codepro){
+        DatabaseManager ac = new DatabaseManager(myView.getContext());
+        ac.delBillDetailCodeProduct(codepro);
+        ac.close();
+        priceOfBill();
+    }
 }
+

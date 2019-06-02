@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
 public class PersonAdd extends Activity {
     protected DatabaseManager db;
     @Override
@@ -51,14 +52,13 @@ public class PersonAdd extends Activity {
         List<String> type = new ArrayList<String>();
         type.addAll(db.getPersonType());
         if (type.size()==0) type.add("");
-        Pertype.setAdapter(new ArrayAdapter(this, R.layout.item_spinner,type));
+        Pertype.setAdapter(new ArrayAdapter(this,R.layout.item_spinner,type));
 
         Button btnadd = (Button) findViewById(R.id.btn_per_add_ok);
         btnadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (Pername.getText().toString().equals("")) {
-                    Toast.makeText(view.getContext(), "Tên để trống, xin nhập", Toast.LENGTH_SHORT).show(); }
+                if (Pername.getText().toString().equals("")) {Toast.makeText(view.getContext(), "Tên để trống, xin nhập", Toast.LENGTH_SHORT).show(); }
                 else {
                     int check = 0;
                     List<Person> listPer = db.getAllPerson();

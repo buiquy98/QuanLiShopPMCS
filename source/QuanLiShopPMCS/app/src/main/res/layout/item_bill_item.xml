@@ -26,7 +26,7 @@
         android:text="Khách hàng:" />
 
     <TextView
-        android:id="@+id/item_bill_pername"
+        android:id="@+id/item_bill_personname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/uselesss1"

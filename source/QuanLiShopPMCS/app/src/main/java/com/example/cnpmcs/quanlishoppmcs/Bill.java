@@ -1,12 +1,13 @@
 package com.example.cnpmcs.quanlishoppmcs;
 
+
 public class Bill {
     private int id;
-    private int codePe;
-    private String peName;
-    private int offPerr;
-    private int offPriii;
-    private int billPri;
+    private int codeP;
+    private String pName;
+    private int offPercent;
+    private int offPrice;
+    private int billPrice;
     private String billTime;
 
     public Bill(){id =0;}
@@ -19,49 +20,51 @@ public class Bill {
         return id;
     }
 
-    public int getCodePe() {
-        return codePe;
+    public int getCodep() {
+        return codeP;
     }
 
-    public void setCodePe(int codeP) {
-        this.codePe = codeP;
+    public void setCodep(int codeP) {
+        this.codeP = codeP;
     }
 
-    public String getPeName() {
-        return peName;
+    public String getPname() {
+        return pName;
     }
 
-    public void setPeName(String pName) {
-        this.peName = pName;
+    public void setPname(String pName) {
+        this.pName = pName;
     }
 
-    public int getoffPerr() {
-        return offPerr;
+    public int getOffpe() {
+        return offPercent;
     }
 
-    public void setoffPerr(int offP) {
-        this.offPerr = offP;
+    public void setOffpe(int offPercent) {
+        this.offPercent = offPercent;
     }
 
-    public int getoffPriii() { return offPriii;
+    public int getOffpr() {
+        return offPrice;
     }
 
-    public void setoffPriii(int offP) { this.offPriii = offP;
+    public void setOffpr(int offPrice) {
+        this.offPrice = offPrice;
     }
 
-    public int getBillPrir() {
-        return billPri;
+    public int getBillpr() {
+        return billPrice;
     }
 
-    public void setBillPri(int billP) {
-        this.billPri = billP;
+    public void setBillpr(int billPrice) {
+        this.billPrice = billPrice;
     }
 
-    public String getBillTime() {
+    public String getBilltime() {
         return billTime;
     }
 
-    public void setBillTime(String bt) {
-        this.billTime = bt;
+    public void setBilltime(String billTime) {
+        this.billTime = billTime;
     }
 }
