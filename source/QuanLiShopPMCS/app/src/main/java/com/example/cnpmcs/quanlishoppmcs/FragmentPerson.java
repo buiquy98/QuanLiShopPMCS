@@ -48,8 +48,8 @@ public class FragmentPerson extends Fragment{
         final EditText searchname = (EditText) view.findViewById(R.id.per_name_search);
         final EditText searchphone = (EditText) view.findViewById(R.id.per_phone_search);
 
-        updateListItem(db.getAllPerson());
-        updateSpinner();
+        updatelistitem(db.getAllPer());
+        updatespinner();
 
         Button btnadd = (Button) view.findViewById(R.id.btn_add_per);
         btnadd.setOnClickListener(new View.OnClickListener() {
@@ -91,11 +91,11 @@ public class FragmentPerson extends Fragment{
             public void afterTextChanged(Editable editable) {
                 String temp = searchname.getText().toString();
                 if (temp.equals("")){
-                    updateListItem(db.getAllPerson());
+                    updatelistitem(db.getAllPer());
                 }
                 else{
                     searchphone.setText("");
-                    updateListItem(db.getPersonByPartName(temp));
+                    updatelistitem(db.getPerbyPartName(temp));
                 }
             }
         });
@@ -115,11 +115,11 @@ public class FragmentPerson extends Fragment{
             public void afterTextChanged(Editable editable) {
                 String temp = searchphone.getText().toString();
                 if (temp.equals("")){
-                    updateListItem(db.getAllPerson());
+                    updatelistitem(db.getAllPer());
                 }
                 else{
                     searchname.setText("");
-                    updateListItem(db.getPersonByPartPhone(temp));
+                    updatelistitem(db.getPerbyPartPhone(temp));
                 }
             }
         });
@@ -131,9 +131,9 @@ public class FragmentPerson extends Fragment{
                 searchname.setText("");
                 searchphone.setText("");
                 if (spinnertype.getSelectedItem().toString().equals("Tất cả")){
-                    updateListItem(db.getAllPerson());
+                    updatelistitem(db.getAllPer());
                 } else {
-                    updateListItem(db.getPersonByType(spinnertype.getSelectedItem().toString()));
+                    updatelistitem(db.getPerbyType(spinnertype.getSelectedItem().toString()));
                 }
             }
 
@@ -146,7 +146,7 @@ public class FragmentPerson extends Fragment{
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 10) {
             if (resultCode == 100) {
-                updateListItem(db.getAllPerson());
+                updatelistitem(db.getAllPer());
                 Toast.makeText(myView.getContext(), "Thêm thành công", Toast.LENGTH_SHORT).show();
             } else if (resultCode == 0)
                 Toast.makeText(myView.getContext(), "Đã hủy thêm", Toast.LENGTH_SHORT).show();
@@ -154,24 +154,24 @@ public class FragmentPerson extends Fragment{
         else if (requestCode == 20)
         {
             if (resultCode == 100){
-                updateListItem(db.getAllPerson());
+                updatelistitem(db.getAllPer());
                 Toast.makeText(myView.getContext(),"Cập nhật thành công",Toast.LENGTH_SHORT).show();
             }
             else if (resultCode == 200){
-                updateListItem(db.getAllPerson());
+                updatelistitem(db.getAllPer());
                 Toast.makeText(myView.getContext(),"Xóa thành công",Toast.LENGTH_SHORT).show();
             }
             else if (resultCode == 0)
                 Toast.makeText(myView.getContext(),"Đã hủy cập nhật sản phẩm",Toast.LENGTH_SHORT).show();
         }
         else if (requestCode == 30){
-            updateListItem(db.getAllPerson());
-            updateSpinner();
+            updatelistitem(db.getAllPer());
+            updatespinner();
         }
 
     }
 
-    protected void updateListItem(List<Person> listtemp)
+    protected void updatelistitem(List<Person> listtemp)
     {
         show.clear();
         show=listtemp;
@@ -180,10 +180,10 @@ public class FragmentPerson extends Fragment{
         adapter.notifyDataSetChanged();
     }
 
-    protected void updateSpinner(){
+    protected void updatespinner(){
         listtype.clear();
         listtype.add("Tất cả");
-        listtype.addAll(db.getPersonType());
+        listtype.addAll(db.getPerType());
         spinnertype.setAdapter(new ArrayAdapter(myView.getContext(),R.layout.item_spinner,listtype));
     }
 }

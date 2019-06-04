@@ -21,7 +21,7 @@ import java.util.List;
 public class ProductEdit extends Activity {
     protected DatabaseManager db;
     protected int idt=0;
-    protected Product mainpro;
+    protected Product mainmer;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,23 +32,23 @@ public class ProductEdit extends Activity {
 
         db = DatabaseManager.getInstance(getBaseContext());
 
-        final TextView Proname = (TextView) findViewById(R.id.pro_add_name);
-        final TextView Prosum = (TextView) findViewById(R.id.pro_add_sum);
-        final TextView Probuy = (TextView) findViewById(R.id.pro_add_buy);
-        final TextView Proprice = (TextView) findViewById(R.id.pro_add_price);
-        final TextView Procount = (TextView) findViewById(R.id.pro_add_count);
-        final TextView Pronote = (TextView) findViewById(R.id.pro_add_note);
-        final Spinner Prosell = (Spinner) findViewById(R.id.spinner_pro_sell);
-        final Spinner Protype = (Spinner) findViewById(R.id.spinner_pro_type);
+        final TextView Mername = (TextView) findViewById(R.id.pro_add_name);
+        final TextView Mersum = (TextView) findViewById(R.id.pro_add_sum);
+        final TextView Merbuy = (TextView) findViewById(R.id.pro_add_buy);
+        final TextView Merprice = (TextView) findViewById(R.id.pro_add_price);
+        final TextView Mercount = (TextView) findViewById(R.id.pro_add_count);
+        final TextView Mernote = (TextView) findViewById(R.id.pro_add_note);
+        final Spinner Mersell = (Spinner) findViewById(R.id.spinner_pro_sell);
+        final Spinner Mertype = (Spinner) findViewById(R.id.spinner_pro_type);
         List<String> selllist = new ArrayList<String>();
         selllist.add("Có");
         selllist.add("Không");
-        Prosell.setAdapter(new ArrayAdapter(this,R.layout.item_spinner,selllist));
+        Mersell.setAdapter(new ArrayAdapter(this,R.layout.item_spinner,selllist));
 
         List<String> typelist = new ArrayList<String>();
-        typelist.addAll(db.getProductType());
+        typelist.addAll(db.getMerType());
         typelist.add("");
-        Protype.setAdapter(new ArrayAdapter(this,R.layout.item_spinner,typelist));
+        Mertype.setAdapter(new ArrayAdapter(this,R.layout.item_spinner,typelist));
 
         Button btnt = (Button) findViewById(R.id.btn_second_pro);
         btnt.setText("Xóa");
@@ -68,58 +68,58 @@ public class ProductEdit extends Activity {
 
         if (getIntent().getExtras() != null){
             idt = getIntent().getIntExtra("ID",0);
-            mainpro = db.getProductById(idt);
-            Proname.setText(mainpro.getName());
-            Prosum.setText(String.valueOf(mainpro.getSum()));
-            if (mainpro.getSell()==0)
-                Prosell.setSelection(((ArrayAdapter)Prosell.getAdapter()).getPosition("Không"));
+            mainmer = db.getMerbyId(idt);
+            Mername.setText(mainmer.getName());
+            Mersum.setText(String.valueOf(mainmer.getSum()));
+            if (mainmer.getSell()==0)
+                Mersell.setSelection(((ArrayAdapter)Mersell.getAdapter()).getPosition("Không"));
             else
-                Prosell.setSelection(((ArrayAdapter)Prosell.getAdapter()).getPosition("Có"));
-            Probuy.setText(String.valueOf(mainpro.getBuy()));
-            Proprice.setText(String.valueOf(mainpro.getPrice()));
-            Protype.setSelection(((ArrayAdapter)Protype.getAdapter()).getPosition(mainpro.getType()));
-            Procount.setText(mainpro.getCount());
-            Pronote.setText(mainpro.getNote());
+                Mersell.setSelection(((ArrayAdapter)Mersell.getAdapter()).getPosition("Có"));
+            Merbuy.setText(String.valueOf(mainmer.getBuy()));
+            Merprice.setText(String.valueOf(mainmer.getPrice()));
+            Mertype.setSelection(((ArrayAdapter)Mertype.getAdapter()).getPosition(mainmer.getType()));
+            Mercount.setText(mainmer.getCount());
+            Mernote.setText(mainmer.getNote());
         }
 
         btnadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (Proname.getText().toString().equals("")) {
+                if (Mername.getText().toString().equals("")) {
                     Toast.makeText(view.getContext(), "Tên để trống, xin nhập", Toast.LENGTH_SHORT).show(); }
-                else if (Prosum.getText().toString().equals("")) {Toast.makeText(view.getContext(), "Số lượng để trống, xin nhập", Toast.LENGTH_SHORT).show(); }
-                else if (Probuy.getText().toString().equals("")) {Toast.makeText(view.getContext(), "Giá vốn để trống, xin nhập", Toast.LENGTH_SHORT).show(); }
-                else if (Proprice.getText().toString().equals("")) {Toast.makeText(view.getContext(), "Giá bán để trống, xin nhập", Toast.LENGTH_SHORT).show(); }
-                else if (Procount.getText().toString().equals("")) {Toast.makeText(view.getContext(), "Đơn vị để trống, xin nhập", Toast.LENGTH_SHORT).show(); }
+                else if (Mersum.getText().toString().equals("")) {Toast.makeText(view.getContext(), "Số lượng để trống, xin nhập", Toast.LENGTH_SHORT).show(); }
+                else if (Merbuy.getText().toString().equals("")) {Toast.makeText(view.getContext(), "Giá vốn để trống, xin nhập", Toast.LENGTH_SHORT).show(); }
+                else if (Merprice.getText().toString().equals("")) {Toast.makeText(view.getContext(), "Giá bán để trống, xin nhập", Toast.LENGTH_SHORT).show(); }
+                else if (Mercount.getText().toString().equals("")) {Toast.makeText(view.getContext(), "Đơn vị để trống, xin nhập", Toast.LENGTH_SHORT).show(); }
                 else
                 {
                     int check = 0;
-                    List<Product> listProduct = db.getAllProduct();
+                    List<Product> listProduct = db.getAllMer();
                     for (Product item : listProduct){
-                        if (item.getName().toUpperCase().equals(Proname.getText().toString().toUpperCase())){ check=1; break;}
+                        if (item.getName().toUpperCase().equals(Mername.getText().toString().toUpperCase())){ check=1; break;}
                     }
-                    if (check==1&&mainpro.getName().equals(Proname.getText().toString())) check=0;
+                    if (check==1&&mainmer.getName().equals(Mername.getText().toString())) check=0;
                     if (check==0)
                     {
                         Product temp = new Product();
-                        temp.setName(Proname.getText().toString());
+                        temp.setName(Mername.getText().toString());
 
-                        if (!Prosum.getText().toString().equals(""))
-                            temp.setSum(Integer.valueOf(Prosum.getText().toString()));
-                        if (Prosell.getSelectedItem().toString().equals("Có"))
+                        if (!Mersum.getText().toString().equals(""))
+                            temp.setSum(Integer.valueOf(Mersum.getText().toString()));
+                        if (Mersell.getSelectedItem().toString().equals("Có"))
                             temp.setSell(1);
                         else temp.setSell(0);
-                        if (!Probuy.getText().toString().equals(""))
-                            temp.setBuy(Integer.valueOf(Probuy.getText().toString()));
-                        if (!Proprice.getText().toString().equals(""))
-                            temp.setPrice(Integer.valueOf(Proprice.getText().toString()));
-                        temp.setType(Protype.getSelectedItem().toString());
-                        temp.setCount(Procount.getText().toString());
-                        temp.setNote(Pronote.getText().toString());
+                        if (!Merbuy.getText().toString().equals(""))
+                            temp.setBuy(Integer.valueOf(Merbuy.getText().toString()));
+                        if (!Merprice.getText().toString().equals(""))
+                            temp.setPrice(Integer.valueOf(Merprice.getText().toString()));
+                        temp.setType(Mertype.getSelectedItem().toString());
+                        temp.setCount(Mercount.getText().toString());
+                        temp.setNote(Mernote.getText().toString());
 
-                       // db.addPro(temp);
+                       // db.addMer(temp);
                         //Toast.makeText(view.getContext(), "Thêm thành công", Toast.LENGTH_SHORT).show();
-                        db.updateProduct(idt,temp);
+                        db.updMer(idt,temp);
                         db.close();
                         setResult(100);
                         finish();
@@ -136,7 +136,7 @@ public class ProductEdit extends Activity {
             public void onClick(DialogInterface dialog, int which) {
                 switch (which){
                     case DialogInterface.BUTTON_POSITIVE:
-                        db.delProduct(idt);
+                        db.delMer(idt);
                         setResult(200);
                         finish();
                         break;

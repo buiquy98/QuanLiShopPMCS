@@ -13,7 +13,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BillDetail extends Activity{
+
+public class BillDetail extends Activity {
     protected DatabaseManager db;
     protected int idt;
     @Override
@@ -34,12 +35,12 @@ public class BillDetail extends Activity{
 
         if (getIntent().getExtras() != null) {
             idt = getIntent().getIntExtra("ID", 0);
-            show=db.getBillDetailItem(idt);
+            show=db.getBDitem(idt);
             BillDetailAdapter adapter = new BillDetailAdapter(this,show);
             listView.setAdapter(adapter);
             adapter.notifyDataSetChanged();
 
-            Bill bill = db.getBillById(idt);
+            Bill bill = db.getBillbyId(idt);
             pername.setText("Khách hàng: " +bill.getPname());
             offPrice.setText("Chiết khấu: " + bill.getOffpr());
             offPercent.setText("Chiết khấu(%): " + bill.getOffpe());
@@ -64,7 +65,7 @@ public class BillDetail extends Activity{
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                db.delBill(idt);
+                db.dellBill(idt);
                 setResult(100);
                 finish();
             }

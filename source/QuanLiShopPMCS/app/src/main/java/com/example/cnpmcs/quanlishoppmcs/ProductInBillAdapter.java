@@ -15,9 +15,9 @@ public class ProductInBillAdapter extends BaseAdapter {
     private List<Product> listData;
     private LayoutInflater layoutInflater;
     private Context context;
-    private SomeInterfaces responder;
+    private SomeInterface responder;
 
-    public ProductInBillAdapter(Context aContext, List<Product> listData, SomeInterfaces test) {
+    public ProductInBillAdapter(Context aContext, List<Product> listData, SomeInterface test) {
         this.context = aContext;
         this.listData = listData;
         this.responder = test;
@@ -65,7 +65,7 @@ public class ProductInBillAdapter extends BaseAdapter {
             public void onClick(View view) {
                 listData.remove(position);
                 notifyDataSetChanged();
-                responder.delBillDetailTempCodeProduct(product.getId());
+                responder.dellBDTcodem(product.getId());
             }
         });
 
@@ -89,7 +89,7 @@ public class ProductInBillAdapter extends BaseAdapter {
                     holder.sumView.setText(String.valueOf((product.getSum()- product.amount) + " " + product.getCount()));
                     String dd = String.valueOf(product.getPrice()* product.amount);
                     holder.outputView.setText(String.format("%,d", Long.parseLong(dd))+" đ");
-                    responder.updateToBillDetailTemp(product.getId(), product.amount);
+                    responder.updtoBDT(product.getId(), product.amount);
                 }
             }
         });
@@ -103,7 +103,7 @@ public class ProductInBillAdapter extends BaseAdapter {
                     holder.sumView.setText(String.valueOf((product.getSum() - product.amount) + " " + product.getCount()));
                     String dd = String.valueOf(product.getPrice() * product.amount);
                     holder.outputView.setText(String.format("%,d", Long.parseLong(dd))+" đ");
-                    responder.updateToBillDetailTemp(product.getId(), product.amount);
+                    responder.updtoBDT(product.getId(), product.amount);
                 }
             }
         });

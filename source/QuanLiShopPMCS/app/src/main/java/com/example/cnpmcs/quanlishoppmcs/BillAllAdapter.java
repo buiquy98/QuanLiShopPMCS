@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+
+
 public class BillAllAdapter extends BaseAdapter {
     private List<Bill> listData;
     private LayoutInflater layoutInflater;
@@ -66,7 +68,4 @@ public class BillAllAdapter extends BaseAdapter {
         TextView priceView;
         TextView timeView;
     }
-
 }
-
-

@@ -35,7 +35,7 @@ public class ProductType extends Activity {
 
         db = DatabaseManager.getInstance(getBaseContext());
 
-         listType= db.getProductType();
+         listType= db.getMerType();
 
         listView = (ListView) findViewById(R.id.list_all_type);
         adapter = new ArrayAdapter(this,R.layout.item_auto_complete,listType);
@@ -52,14 +52,14 @@ public class ProductType extends Activity {
                 if (newType.getText().toString().equals("")) {Toast.makeText(view.getContext(), "Tên kiểu cần thêm không được để trống", Toast.LENGTH_SHORT).show();}
                 else {
                     int check = 0;
-                    List<String> list = db.getProductType();
+                    List<String> list = db.getMerType();
                     for (String item : list){
                         if (item.toUpperCase().equals(newType.getText().toString().toUpperCase())){ check=1; break;}
                     }
                     if (check==0){
                         listType.clear();
-                        db.addPersonType(newType.getText().toString());
-                        listType= db.getProductType();
+                        db.addMerType(newType.getText().toString());
+                        listType= db.getMerType();
                         adapter = new ArrayAdapter(view.getContext(),R.layout.item_auto_complete,listType);
                         listView.setAdapter(adapter);
                         Toast.makeText(view.getContext(), "Thêm thành công", Toast.LENGTH_SHORT).show();
@@ -87,9 +87,9 @@ public class ProductType extends Activity {
             @Override
             public void onClick(View view) {
                 if (!sltType.getText().toString().equals("Chưa chọn (Bấm vào tên loại để chọn)")) {
-                    db.delProductType(sltType.getText().toString());
+                    db.delMerType(sltType.getText().toString());
                     listType.clear();
-                    listType = db.getProductType();
+                    listType = db.getMerType();
                     adapter = new ArrayAdapter(view.getContext(), R.layout.item_auto_complete, listType);
                     listView.setAdapter(adapter);
                     Toast.makeText(view.getContext(), "Xóa thành công", Toast.LENGTH_SHORT).show();
@@ -111,7 +111,7 @@ public class ProductType extends Activity {
                 else
                 {
                     int check = 0;
-                    List<String> list = db.getProductType();
+                    List<String> list = db.getMerType();
                     for (String item : list){
                         if (item.toUpperCase().equals(newTypename.getText().toString().toUpperCase())){ check=1; break;}
                     }
@@ -119,9 +119,9 @@ public class ProductType extends Activity {
                         //Toast.makeText(view.getContext(),"|"+ sltType.getText().toString()+"|\n|"+newTypename.getText().toString()+"|", Toast.LENGTH_SHORT).show();
                        // Toast.makeText(view.getContext(), String.valueOf(db.getMerTypeId(sltType.getText().toString())) , Toast.LENGTH_SHORT).show();
 
-                         db.changeProductType(sltType.getText().toString(),newTypename.getText().toString());
+                         db.changeMerType(sltType.getText().toString(),newTypename.getText().toString());
                         listType.clear();
-                        listType = db.getProductType();
+                        listType = db.getMerType();
                         adapter = new ArrayAdapter(view.getContext(), R.layout.item_auto_complete, listType);
                         listView.setAdapter(adapter);
                         Toast.makeText(view.getContext(), "Cập nhật thành công", Toast.LENGTH_SHORT).show();

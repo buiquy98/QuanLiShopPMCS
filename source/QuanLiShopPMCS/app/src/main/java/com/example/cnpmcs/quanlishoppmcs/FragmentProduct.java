@@ -48,7 +48,7 @@ public class FragmentProduct extends Fragment{
         spinnertype = (Spinner) view.findViewById(R.id.spinner_pro_all_type);//loai san pham de filter
         final EditText searchname = (EditText) view.findViewById(R.id.pro_name_search);//muc tiem kiem ten sp
 
-        updatelistitem(db.getAllProduct());//cap nhat danh sach san pham
+        updatelistitem(db.getAllMer());//cap nhat danh sach san pham
 
         updatespin();//cap nhat spinner loai
 
@@ -66,10 +66,10 @@ public class FragmentProduct extends Fragment{
             public void afterTextChanged(Editable editable) {
                 String temp = searchname.getText().toString();
                 if (temp.equals("")){
-                    updatelistitem(db.getAllProduct());
+                    updatelistitem(db.getAllMer());
                 }
                 else{
-                    updatelistitem(db.getProductByPartName(temp));
+                    updatelistitem(db.getMerbyPartName(temp));
                 }
             }
         });
@@ -80,9 +80,9 @@ public class FragmentProduct extends Fragment{
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 searchname.setText("");
                 if (spinnertype.getSelectedItem().toString().equals("Tất cả")){
-                    updatelistitem(db.getAllProduct());
+                    updatelistitem(db.getAllMer());
                 } else {
-                    updatelistitem(db.getProductByType(spinnertype.getSelectedItem().toString()));
+                    updatelistitem(db.getMerbyType(spinnertype.getSelectedItem().toString()));
                 }
             }
 
@@ -130,7 +130,7 @@ public class FragmentProduct extends Fragment{
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 10) {//them san pham
             if (resultCode == 100){
-                updatelistitem(db.getAllProduct());
+                updatelistitem(db.getAllMer());
                 Toast.makeText(myView.getContext(),"Thêm thành công",Toast.LENGTH_SHORT).show();
             }
             else if (resultCode == 0)
@@ -139,11 +139,11 @@ public class FragmentProduct extends Fragment{
         else if (requestCode == 20)//cap nhat thong tin 1 san pham
         {
             if (resultCode == 100){
-                updatelistitem(db.getAllProduct());
+                updatelistitem(db.getAllMer());
                 Toast.makeText(myView.getContext(),"Cập nhật thành công",Toast.LENGTH_SHORT).show();
             }
             else if (resultCode == 200){
-                updatelistitem(db.getAllProduct());
+                updatelistitem(db.getAllMer());
                 Toast.makeText(myView.getContext(),"Xóa thành công",Toast.LENGTH_SHORT).show();
             }
             else if (resultCode == 0)
@@ -151,7 +151,7 @@ public class FragmentProduct extends Fragment{
         }
         else if (requestCode == 30)//cap nhat loai san pham
         {
-            updatelistitem(db.getAllProduct());
+            updatelistitem(db.getAllMer());
             updatespin();
         }
     }
@@ -168,7 +168,7 @@ public class FragmentProduct extends Fragment{
     protected void updatespin(){
         listtype.clear();
         listtype.add("Tất cả");
-        listtype.addAll(db.getProductType());
+        listtype.addAll(db.getMerType());
         spinnertype.setAdapter(new ArrayAdapter(myView.getContext(),R.layout.item_spinner,listtype));
     }
 

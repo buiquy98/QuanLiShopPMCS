@@ -18,6 +18,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class FragmentBill extends Fragment {
     protected View myView;
     protected DatabaseManager db;
@@ -28,7 +29,6 @@ public class FragmentBill extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.layout_frag_bill_all, container,false);
-
     }
 
     @Override
@@ -40,7 +40,7 @@ public class FragmentBill extends Fragment {
         db = new DatabaseManager(getActivity());
 
         listView = (ListView) view.findViewById(R.id.list_all_bill);
-        updateList(db.getAllBill());
+        updatelist(db.getAllBill());
 
         final EditText codesearch = (EditText) view.findViewById(R.id.bill_search_code);
 
@@ -64,12 +64,12 @@ public class FragmentBill extends Fragment {
 
                     if (bill.getId()!=0){
                         listtemp.add(bill);
-                        updateList(listtemp);
+                        updatelist(listtemp);
                     }
                     else
-                        updateList(listtemp);
+                        updatelist(listtemp);
                 } else{
-                    updateList(db.getAllBill());
+                    updatelist(db.getAllBill());
                 }
             }
         });
@@ -86,10 +86,10 @@ public class FragmentBill extends Fragment {
             public void afterTextChanged(Editable editable) {
                 if (!pernamesearch.getText().toString().equals("")){
                     List<Bill> listtemp = new ArrayList<Bill>();
-                    listtemp = db.getBillByPartName(pernamesearch.getText().toString());
-                    updateList(listtemp);
+                    listtemp = db.getBillbyPartName(pernamesearch.getText().toString());
+                    updatelist(listtemp);
                 }else
-                    updateList(db.getAllBill());
+                    updatelist(db.getAllBill());
             }
         });
 
@@ -107,13 +107,13 @@ public class FragmentBill extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 20){
             if (resultCode==100){
-                updateList(db.getAllBill());
+                updatelist(db.getAllBill());
                 Toast.makeText(myView.getContext(),"Xóa thành công",Toast.LENGTH_SHORT).show();
             }
         }
     }
 
-    protected void updateList(List<Bill> templist){
+    protected void updatelist(List<Bill> templist){
         show.clear();
         show.addAll(templist);
         adapter = new BillAllAdapter(myView.getContext(),show);

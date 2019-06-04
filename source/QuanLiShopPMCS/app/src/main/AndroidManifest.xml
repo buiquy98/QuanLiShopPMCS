@@ -25,6 +25,7 @@
         <activity android:name="com.example.cnpmcs.quanlishoppmcs.PersonAdd"></activity>
         <activity android:name="com.example.cnpmcs.quanlishoppmcs.PersonEdit"></activity>
         <activity android:name="com.example.cnpmcs.quanlishoppmcs.PersonType"></activity>
+        <activity android:name="com.example.cnpmcs.quanlishoppmcs.BillDetail"></activity>
     </application>
 
 </manifest>

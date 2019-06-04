@@ -50,7 +50,7 @@ public class PersonAdd extends Activity {
 
         final Spinner Pertype = (Spinner) findViewById(R.id.spinner_per_type);
         List<String> type = new ArrayList<String>();
-        type.addAll(db.getPersonType());
+        type.addAll(db.getPerType());
         if (type.size()==0) type.add("");
         Pertype.setAdapter(new ArrayAdapter(this,R.layout.item_spinner,type));
 
@@ -61,7 +61,7 @@ public class PersonAdd extends Activity {
                 if (Pername.getText().toString().equals("")) {Toast.makeText(view.getContext(), "Tên để trống, xin nhập", Toast.LENGTH_SHORT).show(); }
                 else {
                     int check = 0;
-                    List<Person> listPer = db.getAllPerson();
+                    List<Person> listPer = db.getAllPer();
                     for (Person item : listPer){
                         if (item.getName().toUpperCase().equals(Pername.getText().toString().toUpperCase())){ check=1; break;}
                     }
@@ -75,7 +75,7 @@ public class PersonAdd extends Activity {
                         temp.setType(Pertype.getSelectedItem().toString());
                         temp.setNote(Pernote.getText().toString());
 
-                        db.addPerson(temp);
+                        db.addPer(temp);
                         db.close();
                         setResult(100);
                         finish();

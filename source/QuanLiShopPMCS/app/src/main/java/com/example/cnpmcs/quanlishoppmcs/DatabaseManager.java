@@ -18,9 +18,9 @@ public class DatabaseManager extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "shop_manager";
 
     private static final String TABLE_PERSON = "person"; //bang ve khach hang
-    private static final String TABLE_PRO = "product"; // bang ve san pham
+    private static final String TABLE_MER = "merchandise"; // bang ve san pham
     private static final String TABLE_PT = "persontype"; // bang ve loai khach
-    private static final String TABLE_PRODUCTTYPE = "protype"; // bang ve loai sp
+    private static final String TABLE_PRODUCTTYPE = "mertype"; // bang ve loai sp
     private static final String TABLE_BILL = "bill"; // bang ve hoa don
     private static final String TABLE_BD = "billdetail"; // chi tiet hoa don
     private static final String TABLE_BDTEMP = "billdetailtemp"; //chi tiet hoa don tam thoi
@@ -36,16 +36,16 @@ public class DatabaseManager extends SQLiteOpenHelper {
     private static final String PTYPE = "ptype";
     private static final String PNOTE = "pnote";
 
-    //Productchandise tag
-    private static final String CODEPRO = "codepro"; //code sp
-    private static final String PRONAME = "proname";//ten
-    private static final String PROSUM = "prosum"; //tong sl 1 mat hang
-    private static final String PROSELL = "prosell"; //con ban hay ko(0,1)
-    private static final String PROBUY = "probuy"; //gia mua vao
-    private static final String PROPRICE = "proprice"; //gia ban ra
-    private static final String PROTYPE = "protype";//loai
-    private static final String PROCOUNT = "procount"; //don vi tinh
-    private static final String PRONOTE = "pronote";//ghi chu cho kh, sp, bill
+    //Merchandise tag
+    private static final String CODEM = "codemer"; //code sp
+    private static final String MNAME = "mname";//ten
+    private static final String MSUM = "msum"; //tong sl 1 mat hang
+    private static final String MSELL = "msell"; //con ban hay ko(0,1)
+    private static final String MBUY = "mbuy"; //gia mua vao
+    private static final String MPRICE = "mprice"; //gia ban ra
+    private static final String MTYPE = "mtype";//loai
+    private static final String MCOUNT = "mcount"; //don vi tinh
+    private static final String MNOTE = "mnote";//ghi chu cho kh, sp, bill
 
     //Bill tag
     private static final String CODEB = "billcode"; //code bill
@@ -91,28 +91,28 @@ public class DatabaseManager extends SQLiteOpenHelper {
                 PTYPE + " TEXT)";
         db.execSQL(sqlQuery);
 
-        sqlQuery = "CREATE TABLE " + TABLE_PRO + " (" +
+        sqlQuery = "CREATE TABLE " + TABLE_MER + " (" +
                 ID + " integer primary key, " +
-                PRONAME + " TEXT, " +
-                PROSUM + " integer, " +
-                PROSELL + " integer, " +
-                PROBUY + " integer, " +
-                PROPRICE + " integer, " +
-                PROTYPE + " TEXT, " +
-                PROCOUNT + " TEXT, " +
-                PRONOTE + " TEXT)";
+                MNAME + " TEXT, " +
+                MSUM + " integer, " +
+                MSELL + " integer, " +
+                MBUY + " integer, " +
+                MPRICE + " integer, " +
+                MTYPE + " TEXT, " +
+                MCOUNT + " TEXT, " +
+                MNOTE + " TEXT)";
         db.execSQL(sqlQuery);
 
         sqlQuery = "CREATE TABLE " + TABLE_PRODUCTTYPE + " (" +
                 ID + " integer primary key, " +
-                PROTYPE + " TEXT)";
+                MTYPE + " TEXT)";
         db.execSQL(sqlQuery);
 
 
         sqlQuery = "CREATE TABLE " + TABLE_BDTEMP + " (" +
                 ID + " integer primary key, " +
                 CODEB + " integer, " +
-                CODEPRO + " integer, " +
+                CODEM + " integer, " +
                 BAMOUNT + " integer)";
         db.execSQL(sqlQuery);
 
@@ -129,7 +129,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         sqlQuery = "CREATE TABLE " + TABLE_BD + " (" +
                 ID + " integer primary key, " +
                 CODEB + " integer, " +
-                CODEPRO + " integer, " +
+                CODEM + " integer, " +
                 BAMOUNT + " integer)";
         db.execSQL(sqlQuery);
     }
@@ -137,7 +137,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PERSON);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PRO);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_MER);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PRODUCTTYPE);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PT);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_BDTEMP);
@@ -147,7 +147,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
 
     //bill chi tiet chinh
-        public int maxBillDetailId(){
+    public int maxBDid(){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_BD, new String[]{ID}, null, null, null, null, null);
         int t = 0;
@@ -159,36 +159,36 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return t;
     }
 
-    public void addBillDetail(int codebill, int codemer, int amountb){
+    public void addBD(int codebill, int codemer, int amountb){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(ID,maxBillDetailId()+1);
+        values.put(ID,maxBDid()+1);
         values.put(CODEB,codebill);
-        values.put(CODEPRO,codemer);
+        values.put(CODEM,codemer);
         values.put(BAMOUNT,amountb);
 
         db.insert(TABLE_BD,null,values);
         db.close();
     }
 
-    public void delBillDetailCodeBill(int codebill){
+    public void delBDcodeb(int codebill){
         SQLiteDatabase db = this.getWritableDatabase();
         String[] s = new String[]{String.valueOf(codebill)};
         db.delete(TABLE_BD, CODEB + " = ?", s);
         db.close();
     }
 
-    public void delBillDetailCodeProduct(int codemer){
+    public void delBDcodem(int codemer){
         SQLiteDatabase db = this.getWritableDatabase();
         String[] s = new String[]{String.valueOf(codemer)};
-        db.delete(TABLE_BD, CODEPRO + " = ?", s);
+        db.delete(TABLE_BD, CODEM + " = ?", s);
         db.close();
     }
 
-    public List<BillItem> getBillDetailItem(int codebill){
+    public List<BillItem> getBDitem(int codebill){
         SQLiteDatabase db = this.getReadableDatabase();
         String[] s = new String[]{String.valueOf(codebill)};
-        Cursor cursor = db.query(TABLE_BD, new String[]{CODEPRO, BAMOUNT}, CODEB + "=?", s, null, null, null);
+        Cursor cursor = db.query(TABLE_BD, new String[]{CODEM, BAMOUNT}, CODEB + "=?", s, null, null, null);
         List<BillItem> list = new ArrayList<BillItem>();
         if (cursor.moveToFirst()) {
             do {
@@ -203,7 +203,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
 
     //bill chinh
-    public int maxBillId(){
+    public int maxBillid(){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_BILL, new String[]{ID}, null, null, null, null, null);
         int t = 0;
@@ -218,7 +218,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     public void addBill(int codeper, String pName,int offPercent,int offPrice,int billPrice,String billTime){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(ID,maxBillId()+1);
+        values.put(ID,maxBillid()+1);
         values.put(CODEP,codeper);
         values.put(PNAME,pName);
         values.put(BOFFPE,offPercent);
@@ -230,15 +230,15 @@ public class DatabaseManager extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void delBill(int id){
+    public void dellBill(int id){
         SQLiteDatabase db = this.getWritableDatabase();
         String[] s = new String[]{String.valueOf(id)};
         db.delete(TABLE_BILL, ID + " = ?", s);
         db.close();
-        delBillDetailCodeBill(id);
+        delBDcodeb(id);
     }
 
-    public Bill getBillById(int id) {
+    public Bill getBillbyId(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
         String[] s = new String[]{String.valueOf(id)};
         Cursor cursor = db.query(TABLE_BILL, new String[]{ID, CODEP, PNAME, BOFFPE, BOFFPR, BPRICE,BTIME}, ID + "=?", s, null, null, null);
@@ -270,7 +270,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return bill;
     }
 
-    public List<Bill> getBillByPartName(String name){
+    public List<Bill> getBillbyPartName(String name){
         SQLiteDatabase db = this.getReadableDatabase();
         // Cursor cursor = db.query(TABLE_PERSON, new String[]{ID, PNAME, PPHONE, PADD, PMAIL, PTYPE, PNOTE}, PNAME + "=?", s, null, null, null);
         // query (String table, String[] columns, String selection, String[]selectionArgs, String groupBy, String having, String orderBy)
@@ -318,7 +318,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
 
     //bill chi tiet phu
-    public int maxBillDetailTempId(){
+    public int maxBDTid(){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_BDTEMP, new String[]{ID}, null, null, null, null, null);
         int t = 0;
@@ -330,22 +330,22 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return t;
     }
 
-    public void addBillDetailTemp(int codebill, int codemer, int amountb){
+    public void addBDT(int codebill, int codemer, int amountb){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(ID,maxBillDetailTempId()+1);
+        values.put(ID,maxBDTid()+1);
         values.put(CODEB,codebill);
-        values.put(CODEPRO,codemer);
+        values.put(CODEM,codemer);
         values.put(BAMOUNT,amountb);
 
         db.insert(TABLE_BDTEMP,null,values);
         db.close();
     }
 
-    public List<BillItem> getBillDetailTempItem(int codebill){
+    public List<BillItem> getBDTitem(int codebill){
         SQLiteDatabase db = this.getReadableDatabase();
         String[] s = new String[]{String.valueOf(codebill)};
-        Cursor cursor = db.query(TABLE_BDTEMP, new String[]{CODEPRO, BAMOUNT}, CODEB + "=?", s, null, null, null);
+        Cursor cursor = db.query(TABLE_BDTEMP, new String[]{CODEM, BAMOUNT}, CODEB + "=?", s, null, null, null);
         List<BillItem> list = new ArrayList<BillItem>();
         if (cursor.moveToFirst()) {
             do {
@@ -359,23 +359,23 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     }
 
-    public void updateBillDetailTempAmount(int cobemer,int amountb){
+    public void updBDTamount(int cobemer,int amountb){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         String[] s = new String[]{String.valueOf(cobemer)};
         values.put(BAMOUNT,amountb);
-        db.update(TABLE_BDTEMP, values, CODEPRO + "=?", s);
+        db.update(TABLE_BDTEMP, values, CODEM + "=?", s);
         db.close();
     }
 
-    public void delBillDetailTempCodeProduct(int codemer){
+    public void delBDTcodem(int codemer){
         SQLiteDatabase db = this.getWritableDatabase();
         String[] s = new String[]{String.valueOf(codemer)};
-        db.delete(TABLE_BDTEMP, CODEPRO + " = ?", s);
+        db.delete(TABLE_BDTEMP, CODEM + " = ?", s);
         db.close();
     }
 
-    public void delBillDetailTempCodeBill(int codebill){
+    public void delBDTcodeb(int codebill){
         SQLiteDatabase db = this.getWritableDatabase();
         String[] s = new String[]{String.valueOf(codebill)};
         db.delete(TABLE_BDTEMP, CODEB + " = ?", s);
@@ -383,11 +383,11 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
 
     //person
-    public void addPerson(Person person) {
+    public void addPer(Person person) {
        // Toast.makeText(context,"cha`",Toast.LENGTH_SHORT).show();
        SQLiteDatabase db = this.getReadableDatabase();
        ContentValues values = new ContentValues();
-         values.put(ID, maxPersonId()+1);
+         values.put(ID, maxPerid()+1);
         values.put(PNAME, person.getName());
         values.put(PPHONE, person.getPhone());
         values.put(PADD, person.getAdd());
@@ -399,14 +399,14 @@ public class DatabaseManager extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void delPerson(int id) {
+    public void delPer(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         String[] s = new String[]{String.valueOf(id)};
         db.delete(TABLE_PERSON, ID + " = ?", s);
         db.close();
     }
 
-    public void updatePerson(int id, Person person) {
+    public void updPer(int id, Person person) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         String[] s = new String[]{String.valueOf(id)};
@@ -421,7 +421,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         db.close();
     }
 
-    public Person getPersonById(int id) {
+    public Person getPerbyId(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
         String[] s = new String[]{String.valueOf(id)};
         Cursor cursor = db.query(TABLE_PERSON, new String[]{ID, PNAME, PPHONE, PADD, PMAIL, PTYPE, PNOTE}, ID + "=?", s, null, null, null);
@@ -438,7 +438,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return person;
     }
 
-    public Person getPersonByName(String name){
+    public Person getPerbyName(String name){
         SQLiteDatabase db = this.getReadableDatabase();
         String[] s = new String[]{name};
         Cursor cursor = db.query(TABLE_PERSON, new String[]{ID, PNAME, PPHONE, PADD, PMAIL, PTYPE, PNOTE}, PNAME + "=?", s, null, null, null);
@@ -454,7 +454,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return person;
     }
 
-    public List<Person> getPersonByPartName(String name){
+    public List<Person> getPerbyPartName(String name){
         SQLiteDatabase db = this.getReadableDatabase();
        // Cursor cursor = db.query(TABLE_PERSON, new String[]{ID, PNAME, PPHONE, PADD, PMAIL, PTYPE, PNOTE}, PNAME + "=?", s, null, null, null);
         // query (String table, String[] columns, String selection, String[]selectionArgs, String groupBy, String having, String orderBy)
@@ -472,7 +472,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return list;
     }
 
-    public List<Person> getPersonByPartPhone(String phone) {
+    public List<Person> getPerbyPartPhone(String phone) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         //Cursor cursor = db.query(TABLE_PERSON, new String[]{ID, CODEP, NAME, PHONE, ADD, MAIL, TYPE, NOTE}, NAME + "=?", name, null, null, null);
@@ -492,7 +492,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return list;
     }
 
-    public List<Person> getPersonByPartMail(String mail) {
+    public List<Person> getPerbyPartMail(String mail) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         //Cursor cursor = db.query(TABLE_PERSON, new String[]{ID, CODEP, NAME, PHONE, ADD, MAIL, TYPE, NOTE}, NAME + "=?", name, null, null, null);
@@ -512,7 +512,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return list;
     }
 
-    public List<Person> getPersonByType(String pertype) {
+    public List<Person> getPerbyType(String pertype) {
         SQLiteDatabase db = this.getReadableDatabase();
         String[] s = new String[]{pertype};
         Cursor cursor = db.query(TABLE_PERSON, new String[]{ID, PNAME, PPHONE, PADD, PMAIL, PTYPE, PNOTE}, PTYPE + "=?", s, null, null, null);
@@ -531,7 +531,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return list;
     }
 
-    public List<Person> getAllPerson() {
+    public List<Person> getAllPer() {
         List<Person> list = new ArrayList<Person>();
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.query(TABLE_PERSON, new String[]{ID, PNAME, PPHONE, PADD, PMAIL, PTYPE, PNOTE}, null, null, null, null, null);
@@ -553,7 +553,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return list;
     }
 
-    public int maxPersonId(){
+    public int maxPerid(){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_PERSON, new String[]{ID}, null, null, null, null, null);
 
@@ -567,7 +567,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return t;
     }
 
-    public int countPerson() {
+    public int countPer() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_PERSON, new String[]{ID}, null, null, null, null, null);
         cursor.moveToFirst();
@@ -577,7 +577,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
 
     //Per Type
-    public int maxPersonTypeId() {
+    public int maxPerTypeid() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_PT, new String[]{ID}, null, null, null, null, null);
 
@@ -591,16 +591,16 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return t;
     }
 
-    public void addPersonType(String pertype){
+    public void addPerType(String pertype){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(ID,maxPersonTypeId()+1);
+        values.put(ID,maxPerTypeid()+1);
         values.put(PTYPE,pertype);
         db.insert(TABLE_PT, null, values);
         db.close();
     }
 
-    public List<String> getPersonType() {
+    public List<String> getPerType() {
         List<String> list = new ArrayList<String>();
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.query(TABLE_PT, new String[]{PTYPE}, null, null, null, null, null);
@@ -615,21 +615,21 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return list;
     }
 
-    public void delPersonType(String pertype) {
+    public void delPerType(String pertype) {
         SQLiteDatabase db = this.getWritableDatabase();
         String[] s = new String[]{pertype};
         String temp = "";
         db.delete(TABLE_PT, PTYPE + " = ?", s);
         db.close();
 
-        List<Person> list = getPersonByType(pertype);
+        List<Person> list = getPerbyType(pertype);
         for (Person per :list){
             per.setType("");
-            updatePerson(per.getId(),per);
+            updPer(per.getId(),per);
         }
     }
 
-    public void changePersonType(String pertypeold,String pertypenew){
+    public void changePerType(String pertypeold,String pertypenew){
         SQLiteDatabase db = this.getWritableDatabase();
         String[] s = new String[]{pertypeold};
         ContentValues contentValues = new ContentValues();
@@ -637,70 +637,70 @@ public class DatabaseManager extends SQLiteOpenHelper {
         db.update(TABLE_PT,contentValues,PTYPE+"=?",s);
         db.close();
 
-        List<Person> list = getPersonByType(pertypeold);
+        List<Person> list = getPerbyType(pertypeold);
         for (Person per :list){
             per.setType(pertypenew);
-            updatePerson(per.getId(),per);
+            updPer(per.getId(),per);
         }
     }
 
     //Product
-    public void addProduct(Product product){
+    public void addMer(Product product){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(ID,maxProductId()+1);
-        values.put(PRONAME, product.getName());
-        values.put(PROSUM, product.getSum());
-        values.put(PROSELL, product.getSell());
-        values.put(PROBUY, product.getBuy());
-        values.put(PROPRICE, product.getPrice());
-        values.put(PROTYPE, product.getType());
-        values.put(PROCOUNT, product.getCount());
-        values.put(PRONOTE, product.getNote());
+        values.put(ID,maxMerid()+1);
+        values.put(MNAME, product.getName());
+        values.put(MSUM, product.getSum());
+        values.put(MSELL, product.getSell());
+        values.put(MBUY, product.getBuy());
+        values.put(MPRICE, product.getPrice());
+        values.put(MTYPE, product.getType());
+        values.put(MCOUNT, product.getCount());
+        values.put(MNOTE, product.getNote());
 
-        db.insert(TABLE_PRO, null, values);
+        db.insert(TABLE_MER, null, values);
         db.close();
     }
 
-    public void delProduct(int id) {
+    public void delMer(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         String[] s = new String[]{String.valueOf(id)};
-        db.delete(TABLE_PRO, ID + " = ?", s);
+        db.delete(TABLE_MER, ID + " = ?", s);
         db.close();
-        delBillDetailTempCodeProduct(id);
-        delBillDetailCodeProduct(id);
+        delBDTcodem(id);
+        delBDcodem(id);
     }
 
-    public void updateProduct(int id, Product product) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        String[] s = new String[]{String.valueOf(id)};
-
-        values.put(PRONAME, product.getName());
-        values.put(PROSUM, product.getSum());
-        values.put(PROSELL, product.getSell());
-        values.put(PROBUY, product.getBuy());
-        values.put(PROPRICE, product.getPrice());
-        values.put(PROTYPE, product.getType());
-        values.put(PROCOUNT, product.getCount());
-        values.put(PRONOTE, product.getNote());
-        db.update(TABLE_PRO, values, ID + "=?", s);
-        db.close();
-    }
-
-    public void updateProductSum(int id,int newsum){
+    public void updMer(int id, Product product) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         String[] s = new String[]{String.valueOf(id)};
-        values.put(PROSUM,newsum);
-        db.update(TABLE_PRO, values, ID + "=?", s);
+
+        values.put(MNAME, product.getName());
+        values.put(MSUM, product.getSum());
+        values.put(MSELL, product.getSell());
+        values.put(MBUY, product.getBuy());
+        values.put(MPRICE, product.getPrice());
+        values.put(MTYPE, product.getType());
+        values.put(MCOUNT, product.getCount());
+        values.put(MNOTE, product.getNote());
+        db.update(TABLE_MER, values, ID + "=?", s);
         db.close();
     }
 
-    public Product getProductById(int id) {
+    public void updMerSum(int id,int newsum){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        String[] s = new String[]{String.valueOf(id)};
+        values.put(MSUM,newsum);
+        db.update(TABLE_MER, values, ID + "=?", s);
+        db.close();
+    }
+
+    public Product getMerbyId(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
         String[] s = new String[]{String.valueOf(id)};
-        Cursor cursor = db.query(TABLE_PRO, new String[]{ID, PRONAME, PROSUM, PROSELL, PROBUY, PROPRICE, PROTYPE, PROCOUNT, PRONOTE}, ID + "=?", s, null, null, null);
+        Cursor cursor = db.query(TABLE_MER, new String[]{ID, MNAME, MSUM, MSELL, MBUY, MPRICE, MTYPE, MCOUNT, MNOTE}, ID + "=?", s, null, null, null);
         // query (String table, String[] columns, String selection, String[]selectionArgs, String groupBy, String having, String orderBy)
         // rawquery ("SELECT * FROM "+TABLE_NAME +" WHERE id = '1'",null)
         Product product = null;
@@ -725,10 +725,10 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
 
 
-    public List<Product> getProductByType(String mertype) {
+    public List<Product> getMerbyType(String mertype) {
         SQLiteDatabase db = this.getReadableDatabase();
         String[] s = new String[]{mertype};
-        Cursor cursor = db.query(TABLE_PRO, new String[]{ID, PRONAME, PROSUM, PROSELL, PROBUY, PROPRICE, PROTYPE, PROCOUNT, PRONOTE}, PROTYPE + "=?", s, null, null, null);
+        Cursor cursor = db.query(TABLE_MER, new String[]{ID, MNAME, MSUM, MSELL, MBUY, MPRICE, MTYPE, MCOUNT, MNOTE}, MTYPE + "=?", s, null, null, null);
         // query (String table, String[] columns, String selection, String[]selectionArgs, String groupBy, String having, String orderBy)
         // rawquery ("SELECT * FROM "+TABLE_NAME +" WHERE id = '1'",null)
         List<Product> list = new ArrayList<Product>();
@@ -744,13 +744,13 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return list;
     }
 
-    public Product getProductByName(String name) {
+    public Product getMerbyName(String name) {
         SQLiteDatabase db = this.getReadableDatabase();
         String[] s = new String[]{name};
-        Cursor cursor = db.query(TABLE_PRO, new String[]{ID, PRONAME, PROSUM, PROSELL, PROBUY, PROPRICE, PROTYPE, PROCOUNT, PRONOTE}, PRONAME + "=?", s, null, null, null);
+        Cursor cursor = db.query(TABLE_MER, new String[]{ID, MNAME, MSUM, MSELL, MBUY, MPRICE, MTYPE, MCOUNT, MNOTE}, MNAME + "=?", s, null, null, null);
         // query (String table, String[] columns, String selection, String[]selectionArgs, String groupBy, String having, String orderBy)
         // rawquery ("SELECT * FROM "+TABLE_NAME +" WHERE id = '1'",null)
-       // Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_PRO + "WHERE name LIKE '%" + name + "%'", null);
+       // Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_MER + "WHERE name LIKE '%" + name + "%'", null);
         Product product = null;
         if (cursor != null) {
             cursor.moveToFirst();
@@ -771,13 +771,13 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return product;
     }
 
-    public List<Product> getProductByPartName(String name) {
+    public List<Product> getMerbyPartName(String name) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         //Cursor cursor = db.query(TABLE_PERSON, new String[]{ID, CODEP, NAME, PHONE, ADD, MAIL, TYPE, NOTE}, NAME + "=?", name, null, null, null);
         // query (String table, String[] columns, String selection, String[]selectionArgs, String groupBy, String having, String orderBy)
         // rawquery ("SELECT * FROM "+TABLE_NAME +" WHERE id = '1'",null)
-        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_PRO + " WHERE " +PRONAME+" LIKE '%" + name + "%'", null);
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_MER + " WHERE " +MNAME+" LIKE '%" + name + "%'", null);
         List<Product> list = new ArrayList<Product>();
         Product product = null;
         if (cursor.moveToFirst()) {
@@ -791,10 +791,10 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return list;
     }
 
-    public List<Product> getAllProduct() {
+    public List<Product> getAllMer() {
         List<Product> list = new ArrayList<Product>();
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.query(TABLE_PRO, new String[]{ID, PRONAME, PROSUM, PROSELL, PROBUY, PROPRICE, PROTYPE, PROCOUNT, PRONOTE}, null, null, null, null, null);
+        Cursor cursor = db.query(TABLE_MER, new String[]{ID, MNAME, MSUM, MSELL, MBUY, MPRICE, MTYPE, MCOUNT, MNOTE}, null, null, null, null, null);
         if (cursor.moveToFirst()) {
             do {
                 Product product = new Product();
@@ -815,11 +815,11 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return list;
     }
 
-    public List<Product> getProductSelling() {
+    public List<Product> getMerselling() {
         List<Product> list = new ArrayList<Product>();
         SQLiteDatabase db = this.getWritableDatabase();
         String[] s = new String[]{String.valueOf(1)};
-        Cursor cursor = db.query(TABLE_PRO, new String[]{ID, PRONAME, PROSUM, PROSELL, PROBUY, PROPRICE, PROTYPE, PROCOUNT, PRONOTE}, PROSELL + "=?",s, null, null, null);
+        Cursor cursor = db.query(TABLE_MER, new String[]{ID, MNAME, MSUM, MSELL, MBUY, MPRICE, MTYPE, MCOUNT, MNOTE}, MSELL + "=?",s, null, null, null);
         if (cursor.moveToFirst()) {
             do {
                 Product product = new Product();
@@ -841,18 +841,18 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return list;
     }
 
-    public int countProduct() {
+    public int countMer() {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_PRO, new String[]{ID}, null, null, null, null, null);
+        Cursor cursor = db.query(TABLE_MER, new String[]{ID}, null, null, null, null, null);
         cursor.moveToFirst();
         int t = cursor.getCount();
         cursor.close();
         return t;
     }
 
-    public int maxProductId(){
+    public int maxMerid(){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_PRO, new String[]{ID}, null, null, null, null, null);
+        Cursor cursor = db.query(TABLE_MER, new String[]{ID}, null, null, null, null, null);
 
         int t = 0;
         if (cursor.getCount()!=0) {
@@ -865,7 +865,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
 
     //Product Type
-    public int maxProductTypeId() {
+    public int maxMerTypeid() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_PRODUCTTYPE, new String[]{ID}, null, null, null, null, null);
 
@@ -878,10 +878,10 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return t;
     }
 
-    public List<String> getProductType() {
+    public List<String> getMerType() {
         List<String> list = new ArrayList<String>();
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.query(TABLE_PRODUCTTYPE, new String[]{PROTYPE}, null, null, null, null, null);
+        Cursor cursor = db.query(TABLE_PRODUCTTYPE, new String[]{MTYPE}, null, null, null, null, null);
         if (cursor.moveToFirst())
         {
             do{
@@ -893,41 +893,41 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return list;
     }
 
-    public void addProductType(String mertype){
+    public void addMerType(String mertype){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(ID,maxProductTypeId()+1);
-        values.put(PROTYPE,mertype);
+        values.put(ID,maxMerTypeid()+1);
+        values.put(MTYPE,mertype);
         db.insert(TABLE_PRODUCTTYPE, null, values);
         db.close();
     }
 
-    public void delProductType(String mertype) {
+    public void delMerType(String mertype) {
         SQLiteDatabase db = this.getWritableDatabase();
         String[] s = new String[]{mertype};
         String temp = "";
-        db.delete(TABLE_PRODUCTTYPE, PROTYPE + " = ?", s);
+        db.delete(TABLE_PRODUCTTYPE, MTYPE + " = ?", s);
         db.close();
 
-        List<Product> list = getProductByType(mertype);
+        List<Product> list = getMerbyType(mertype);
         for (Product product :list){
             product.setType("");
-            updateProduct(product.getId(), product);
+            updMer(product.getId(), product);
         }
     }
 
-    public void changeProductType(String mertypeold,String mertypenew){
+    public void changeMerType(String mertypeold,String mertypenew){
         SQLiteDatabase db = this.getWritableDatabase();
         String[] s = new String[]{mertypeold};
        ContentValues contentValues = new ContentValues();
-        contentValues.put(PROTYPE,mertypenew);
-        db.update(TABLE_PRODUCTTYPE,contentValues,PROTYPE+"=?",s);
+        contentValues.put(MTYPE,mertypenew);
+        db.update(TABLE_PRODUCTTYPE,contentValues,MTYPE+"=?",s);
         db.close();
 
-        List<Product> list = getProductByType(mertypeold);
+        List<Product> list = getMerbyType(mertypeold);
         for (Product product :list){
             product.setType(mertypenew);
-            updateProduct(product.getId(), product);
+            updMer(product.getId(), product);
         }
     }
 }

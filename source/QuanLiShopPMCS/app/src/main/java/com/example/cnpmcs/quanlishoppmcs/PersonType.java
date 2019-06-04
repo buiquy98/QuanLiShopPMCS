@@ -36,7 +36,7 @@ public class PersonType extends Activity {
 
         db = DatabaseManager.getInstance(getBaseContext());
 
-         listType= db.getPersonType();
+         listType= db.getPerType();
 
         listView = (ListView) findViewById(R.id.list_all_type);
         adapter = new ArrayAdapter(this,R.layout.item_auto_complete,listType);
@@ -53,14 +53,14 @@ public class PersonType extends Activity {
                 if (newType.getText().toString().equals("")) {Toast.makeText(view.getContext(), "Tên kiểu cần thêm không được để trống", Toast.LENGTH_SHORT).show();}
                 else {
                     int check = 0;
-                    List<String> list = db.getPersonType();
+                    List<String> list = db.getPerType();
                     for (String item : list){
                         if (item.toUpperCase().equals(newType.getText().toString().toUpperCase())){ check=1; break;}
                     }
                     if (check==0){
                         listType.clear();
-                        db.addPersonType(newType.getText().toString());
-                        listType= db.getPersonType();
+                        db.addPerType(newType.getText().toString());
+                        listType= db.getPerType();
                         adapter = new ArrayAdapter(view.getContext(),R.layout.item_auto_complete,listType);
                         listView.setAdapter(adapter);
                         Toast.makeText(view.getContext(), "Thêm thành công", Toast.LENGTH_SHORT).show();
@@ -88,9 +88,9 @@ public class PersonType extends Activity {
             @Override
             public void onClick(View view) {
                 if (!sltType.getText().toString().equals("Chưa chọn (Bấm vào tên loại để chọn)")) {
-                    db.delPersonType(sltType.getText().toString());
+                    db.delPerType(sltType.getText().toString());
                     listType.clear();
-                    listType = db.getPersonType();
+                    listType = db.getPerType();
                     adapter = new ArrayAdapter(view.getContext(), R.layout.item_auto_complete, listType);
                     listView.setAdapter(adapter);
                     Toast.makeText(view.getContext(), "Xóa thành công", Toast.LENGTH_SHORT).show();
@@ -112,7 +112,7 @@ public class PersonType extends Activity {
                 else
                 {
                     int check = 0;
-                    List<String> list = db.getPersonType();
+                    List<String> list = db.getPerType();
                     for (String item : list){
                         if (item.toUpperCase().equals(newTypename.getText().toString().toUpperCase())){ check=1; break;}
                     }
@@ -120,9 +120,9 @@ public class PersonType extends Activity {
                         //Toast.makeText(view.getContext(),"|"+ sltType.getText().toString()+"|\n|"+newTypename.getText().toString()+"|", Toast.LENGTH_SHORT).show();
                        // Toast.makeText(view.getContext(), String.valueOf(db.getMerTypeId(sltType.getText().toString())) , Toast.LENGTH_SHORT).show();
 
-                         db.changePersonType(sltType.getText().toString(),newTypename.getText().toString());
+                         db.changePerType(sltType.getText().toString(),newTypename.getText().toString());
                         listType.clear();
-                        listType = db.getPersonType();
+                        listType = db.getPerType();
                         adapter = new ArrayAdapter(view.getContext(), R.layout.item_auto_complete, listType);
                         listView.setAdapter(adapter);
                         Toast.makeText(view.getContext(), "Cập nhật thành công", Toast.LENGTH_SHORT).show();

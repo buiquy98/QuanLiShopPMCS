@@ -1,16 +1,14 @@
 package com.example.cnpmcs.quanlishoppmcs;
 
 import android.content.Context;
-import android.database.DataSetObserver;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import java.util.List;
+
 
 public class BillDetailAdapter extends BaseAdapter {
     private List<BillItem> listData;
@@ -54,7 +52,7 @@ public class BillDetailAdapter extends BaseAdapter {
 
         BillItem billItem = this.listData.get(position);
         DatabaseManager db = DatabaseManager.getInstance(convertView.getContext().getApplicationContext());
-        Product product = db.getProductById(billItem.codepro);
+        Product product = db.getMerbyId(billItem.codem);
         holder.nameView.setText(product.getName());
         holder.amountView.setText(String.valueOf(billItem.amountb));
         String d = String.valueOf(billItem.amountb* product.getPrice());

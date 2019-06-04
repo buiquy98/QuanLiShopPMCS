@@ -42,10 +42,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //khoi tao cac fragment
         listfr = new ArrayList<Fragment>();
-        //listfr.add(new FragmentMain());
+        listfr.add(new FragmentMain());
+        listfr.add(new FragmentProduct());
         listfr.add(new FragmentPerson());
         listfr.add(new FragmentBill());
-
+        //khoi tao database
         db = new DatabaseManager(this);
 
         db.close();
@@ -99,7 +100,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         android.support.v4.app.FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-//--
         if (id == R.id.nav_bill_detail) {
 
             //check neu khong o main bill thi bam vao ko tu reload va add vao back stack de de dang out ung dung
@@ -107,23 +107,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 ft.replace(R.id.area,listfr.get(0)).addToBackStack("mainfrag");
                 ft.commit();
             }
-        }
-        else if (id == R.id.nav_person) {
+        } else if (id == R.id.nav_product) {
+            // load fragment danh sach san pham
+            ft.replace(R.id.area,listfr.get(1)).addToBackStack("");
+            ft.commit();
 
+        } else if (id == R.id.nav_person) {
             //reset thong tin khach hang trong hoa don, de tranh tinh trang khach hang bi xoa, se cap nhat
             FragmentMain abc = (FragmentMain) listfr.get(0);
-            abc.personInBillReset();
+            abc.perinbillreset();
 
             // load fragment danh sach khach hang
-            ft.replace(R.id.area,listfr.get(1)).addToBackStack("");
+            ft.replace(R.id.area,listfr.get(2)).addToBackStack("");
             ft.commit();
         } else if (id == R.id.nav_bill) {
             // load fragment danh sach hoa don
             ft.replace(R.id.area,listfr.get(3)).addToBackStack("");
             ft.commit();
         }
-        //--
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

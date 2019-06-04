@@ -28,12 +28,12 @@ import java.util.List;
 import java.util.Locale;
 
 
-public class FragmentMain extends Fragment implements SomeInterfaces {
+public class FragmentMain extends Fragment implements SomeInterface {
     protected View myView;
     protected TabHost tab;//tab chinh cua lap hoa don
     protected DatabaseManager db;//co so du lieu
     protected TextView maintext;//title hoa don
-    protected List<Product> listpro = new ArrayList<Product>();//danh sach san pham thuoc hoa don
+    protected List<Product> listmer = new ArrayList<Product>();//danh sach san pham thuoc hoa don
     protected ListView listView;//list view cac san pham
     protected ProductInBillAdapter adapter;//adapter cua listview
     protected int main_bill_code;//ma hoa don
@@ -71,7 +71,7 @@ public class FragmentMain extends Fragment implements SomeInterfaces {
         super.onViewCreated(view, savedInstanceState);
         db = new DatabaseManager(getActivity());//goi lai database tu main activity
         getActivity().setTitle("Lập hóa đơn");//set title
-        main_bill_code = db.maxBillId()+1;//lay so hoa don moi nhat
+        main_bill_code = db.maxBillid()+1;//lay so hoa don moi nhat
         //khoi tao text view title hoa don
         maintext = (TextView) view.findViewById(R.id.text_bill_name);
 
@@ -84,7 +84,7 @@ public class FragmentMain extends Fragment implements SomeInterfaces {
         pertype =(TextView) view.findViewById(R.id.per_type);
         pernote =(TextView) view.findViewById(R.id.per_note);
         pernote.setMovementMethod(new ScrollingMovementMethod());//tuong tu nhu tren
-        personInBillReset();
+        perinbillreset();
 
         listView = (ListView) view.findViewById(R.id.pro_list);//list item thuoc hoa don
 
@@ -92,29 +92,29 @@ public class FragmentMain extends Fragment implements SomeInterfaces {
 
         tabsetup(view);//set up tab
 
-        suggestPro(view);//xu ly suggest san pham va add san pham vao danh sach san pham
+        suggestmer(view);//xu ly suggest san pham va add san pham vao danh sach san pham
 
-        suggestPerson(view);//xu ly suggest khach hang va cap nhat thong tin khach hang
+        suggestper(view);//xu ly suggest khach hang va cap nhat thong tin khach hang
 
         Button btnclean = (Button) view.findViewById(R.id.btn_bill_clear);
         btnclean.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                delBillDetailTempCodeBill(0);
-                listpro.clear();
-                List<BillItem> billItemList = db.getBillDetailTempItem(0);
+                dellBDTcodeb(0);
+                listmer.clear();
+                List<BillItem> billItemList = db.getBDTitem(0);
                 for (BillItem item :billItemList){
-                    Product tada = db.getProductById(item.codepro);
+                    Product tada = db.getMerbyId(item.codem);
                     tada.amount = item.amountb;
-                    listpro.add(tada);
+                    listmer.add(tada);
                 }
                 adapter.notifyDataSetChanged();
-                main_bill_code = db.maxBillId() + 1;
+                main_bill_code = db.maxBillid() + 1;
                 main_bill_pcode = 0;
                 main_bill_offpr = 0;
                 main_bill_offpe = 0;
                 main_bill_time = "";
-                priceOfBill();
+                priceofbill();
                 maintext.setText("Hóa đơn số " + String.valueOf(main_bill_code) + " - ");
                 pername.setText("");
                 perphone.setText("");
@@ -135,29 +135,29 @@ public class FragmentMain extends Fragment implements SomeInterfaces {
             @Override
             public void onClick(View view) {
                 if (main_bill_pcode==0) {Toast.makeText(myView.getContext(),"Chưa nhập thông tin khách hàng",Toast.LENGTH_SHORT).show();}
-                else if (listpro.size()==0) {Toast.makeText(myView.getContext(),"Hóa đơn chưa có sản phẩm",Toast.LENGTH_SHORT).show();}
+                else if (listmer.size()==0) {Toast.makeText(myView.getContext(),"Hóa đơn chưa có sản phẩm",Toast.LENGTH_SHORT).show();}
                 else {
                     main_bill_time = billTime.getText().toString();
-                    main_bill_code = db.maxBillId() + 1;
-                    String pName = db.getPersonById(main_bill_pcode).getName();
+                    main_bill_code = db.maxBillid() + 1;
+                    String pName = db.getPerbyId(main_bill_pcode).getName();
                     db.addBill(main_bill_pcode,pName,main_bill_offpe,main_bill_offpr,main_bill_price,main_bill_time);
-                    List<BillItem> listitem = db.getBillDetailTempItem(0);
+                    List<BillItem> listitem = db.getBDTitem(0);
                     for (BillItem item : listitem) {
-                        db.addBillDetail(main_bill_code, item.codepro, item.amountb);
-                        Product product = db.getProductById(item.codepro);
-                        db.updateProductSum(item.codepro, product.getSum()-item.amountb);
+                        db.addBD(main_bill_code, item.codem, item.amountb);
+                        Product product = db.getMerbyId(item.codem);
+                        db.updMerSum(item.codem, product.getSum()-item.amountb);
                         Toast.makeText(myView.getContext(), "Lưu hóa đơn thành công", Toast.LENGTH_SHORT).show();
                     }
-                    delBillDetailTempCodeBill(0);
-                    listpro.clear();
+                    dellBDTcodeb(0);
+                    listmer.clear();
                     adapter.notifyDataSetChanged();
-                    main_bill_code = db.maxBillId() + 1;
+                    main_bill_code = db.maxBillid() + 1;
                     main_bill_pcode = 0;
                     main_bill_offpr = 0;
                     main_bill_offpe = 0;
                     main_bill_time = "";
                     maintext.setText("Hóa đơn số " + String.valueOf(main_bill_code) + " - ");
-                    priceOfBill();
+                    priceofbill();
                     pername.setText("");
                     perphone.setText("");
                     peradd.setText("");
@@ -219,7 +219,7 @@ public class FragmentMain extends Fragment implements SomeInterfaces {
                 if (!offPrice.getText().toString().equals(""))
                     t = Integer.valueOf(offPrice.getText().toString());
                 main_bill_offpr=t;
-                priceOfBill();
+                priceofbill();
             }
         });
 
@@ -231,7 +231,7 @@ public class FragmentMain extends Fragment implements SomeInterfaces {
                 if (!offPercent.getText().toString().equals(""))
                     t=Integer.valueOf(offPercent.getText().toString());
                 main_bill_offpe=t;
-                priceOfBill();
+                priceofbill();
             }
         });
     }
@@ -259,30 +259,30 @@ public class FragmentMain extends Fragment implements SomeInterfaces {
     }
 
     //xu ly cap nhat them san pham
-    protected void suggestPro(View view){
+    protected void suggestmer(View view){
 
-        listpro = new ArrayList<Product>(){};
-        List<BillItem> billItemList = db.getBillDetailTempItem(0);
+        listmer = new ArrayList<Product>(){};
+        List<BillItem> billItemList = db.getBDTitem(0);
         for (BillItem item :billItemList){
-            Product tada = db.getProductById(item.codepro);
+            Product tada = db.getMerbyId(item.codem);
             tada.amount = item.amountb;
-            listpro.add(tada);
+            listmer.add(tada);
         }
-        priceOfBill();
+        priceofbill();
 
-        adapter = new ProductInBillAdapter(view.getContext(),listpro,this);
+        adapter = new ProductInBillAdapter(view.getContext(),listmer,this);
         listView.setAdapter(adapter);
 
 
 
         //xu ly text suggest vao cap nhat danh sach san pham cua hoa don
-        final List<String> proname2 = new ArrayList<String>(){};
-        final List<Product> listtemp = db.getProductSelling();
+        final List<String> mername2 = new ArrayList<String>(){};
+        final List<Product> listtemp = db.getMerselling();
         for (Product item : listtemp){
-            proname2.add(item.getName().toString());
+            mername2.add(item.getName().toString());
         }
         final AutoCompleteTextView text = (AutoCompleteTextView) view.findViewById(R.id.pro_auto);
-        text.setAdapter(new ArrayAdapter(view.getContext(),R.layout.item_auto_complete,proname2));
+        text.setAdapter(new ArrayAdapter(view.getContext(),R.layout.item_auto_complete,mername2));
 
 
 
@@ -292,25 +292,25 @@ public class FragmentMain extends Fragment implements SomeInterfaces {
                 int check =0;
                 int id =-1;
                 String d = adapterView.getItemAtPosition(i).toString();
-                for (Product item : listpro){
-                    if (item.getName().equals(d)) {check=1; id=listpro.indexOf(item); break;}
+                for (Product item : listmer){
+                    if (item.getName().equals(d)) {check=1; id=listmer.indexOf(item); break;}
                 }
                 if (check ==0) {
-                    Product temp = db.getProductByName(d);
+                    Product temp = db.getMerbyName(d);
                     temp.amount = 1;
-                    listpro.add(temp);
+                    listmer.add(temp);
                     adapter.notifyDataSetChanged();
                     text.setText("");
-                    db.addBillDetailTemp(0,temp.getId(),temp.amount);
-                    priceOfBill();
+                    db.addBDT(0,temp.getId(),temp.amount);
+                    priceofbill();
                 }
                 else {
-                    if (listpro.get(id).getSum() > 0) {
-                        listpro.get(id).amount++;
+                    if (listmer.get(id).getSum() > 0) {
+                        listmer.get(id).amount++;
                         adapter.notifyDataSetChanged();
                         text.setText("");
-                        updateToBillDetailTemp(listpro.get(id).getId(),listpro.get(id).amount);
-                        priceOfBill();
+                        updtoBDT(listmer.get(id).getId(),listmer.get(id).amount);
+                        priceofbill();
                     }
                 }
             }
@@ -318,10 +318,10 @@ public class FragmentMain extends Fragment implements SomeInterfaces {
     }
 
     //xu ly cap nhat khach hang
-    protected void suggestPerson(View view){
+    protected void suggestper(View view){
         //xu ly text suggest vao cap nhat danh sach san pham cua hoa don
         final List<String> perlist = new ArrayList<String>(){};
-        List<Person> list = db.getAllPerson();
+        List<Person> list = db.getAllPer();
         for (Person item : list){
             perlist.add(item.getName().toString());
         }
@@ -332,7 +332,7 @@ public class FragmentMain extends Fragment implements SomeInterfaces {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String ten = adapterView.getItemAtPosition(i).toString();
-                Person person = db.getPersonByName(ten.toString());
+                Person person = db.getPerbyName(ten.toString());
                 pername.setText(person.getName());
                 perphone.setText(person.getPhone());
                 peradd.setText(person.getAdd());
@@ -358,7 +358,7 @@ public class FragmentMain extends Fragment implements SomeInterfaces {
     }
 
     //reset cac truong cua thong tin khach hang thuoc hoa don
-    public void personInBillReset(){
+    public void perinbillreset(){
         maintext.setText("Hóa đơn số " + String.valueOf(main_bill_code) + " - ");
         main_bill_pcode = 0;
         pername.setText("");
@@ -370,9 +370,9 @@ public class FragmentMain extends Fragment implements SomeInterfaces {
     }
 
     //cap nhat tong tien cua bill
-    protected void priceOfBill(){
+    protected void priceofbill(){
         int temp =0;
-        for (Product item : listpro){
+        for (Product item : listmer){
             temp=temp+item.amount*item.getPrice();
         }
 
@@ -392,29 +392,29 @@ public class FragmentMain extends Fragment implements SomeInterfaces {
 
     //cap nhat amount cua san pham thuoc bill tam thoi
     @Override
-    public void updateToBillDetailTemp(int codemer,int bamount){
+    public void updtoBDT(int codemer,int bamount){
         DatabaseManager ac = new DatabaseManager(myView.getContext());
-        ac.updateBillDetailTempAmount(codemer,bamount);
+        ac.updBDTamount(codemer,bamount);
         ac.close();
-        priceOfBill();
+        priceofbill();
     }
 
     //phuong thuc xoa ma bill khoi table bill tam thoi, thuong la 0, sau nay se update nhieu bill 1 luc
     @Override
-    public void delBillDetailTempCodeBill(int codebill){
+    public void dellBDTcodeb(int codebill){
         DatabaseManager ac = new DatabaseManager(myView.getContext());
-        ac.delBillDetailTempCodeBill(codebill);
+        ac.delBDTcodeb(codebill);
         ac.close();
-        priceOfBill();
+        priceofbill();
     }
 
     //phuong thuc xoa ma sp khoi table bill tam thoi
     @Override
-    public void delBillDetailTempCodeProduct(int codepro){
+    public void dellBDTcodem(int codem){
         DatabaseManager ac = new DatabaseManager(myView.getContext());
-        ac.delBillDetailCodeProduct(codepro);
+        ac.delBDTcodem(codem);
         ac.close();
-        priceOfBill();
+        priceofbill();
     }
 }
 
