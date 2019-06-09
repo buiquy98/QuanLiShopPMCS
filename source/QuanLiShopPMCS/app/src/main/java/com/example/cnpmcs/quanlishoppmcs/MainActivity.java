@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //khoi tao cac fragment
         listfr = new ArrayList<Fragment>();
         listfr.add(new FragmentMain());
-        listfr.add(new FragmentProduct());
+        listfr.add(new FragmentMerchadise());
         listfr.add(new FragmentPerson());
         listfr.add(new FragmentBill());
         //khoi tao database

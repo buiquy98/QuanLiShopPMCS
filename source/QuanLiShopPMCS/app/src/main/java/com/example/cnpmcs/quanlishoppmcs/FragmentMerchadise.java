@@ -22,7 +22,7 @@ import java.util.List;
 
 
 
-public class FragmentProduct extends Fragment{
+public class FragmentMerchadise extends Fragment{
     protected View myView;
     protected DatabaseManager db;
     protected ListView listView;
