@@ -17,7 +17,7 @@ import android.widget.Toast;
 import java.util.List;
 
 
-public class ProductType extends Activity {
+public class MerchadiseType extends Activity {
     DatabaseManager db;
     protected List<String> listType;
     protected ArrayAdapter adapter;
@@ -138,7 +138,7 @@ public class ProductType extends Activity {
         btnback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ProductType.super.onBackPressed();
+                MerchadiseType.super.onBackPressed();
             }
         });
     }

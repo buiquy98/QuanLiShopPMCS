@@ -11,20 +11,20 @@ import android.widget.TextView;
 import java.util.List;
 
 
-public class ProductInBillAdapter extends BaseAdapter {
-    private List<Product> listData;
+public class MerchadiseInBillAdapter extends BaseAdapter {
+    private List<Merchadise> listData;
     private LayoutInflater layoutInflater;
     private Context context;
     private SomeInterface responder;
 
-    public ProductInBillAdapter(Context aContext, List<Product> listData, SomeInterface test) {
+    public MerchadiseInBillAdapter(Context aContext, List<Merchadise> listData, SomeInterface test) {
         this.context = aContext;
         this.listData = listData;
         this.responder = test;
         layoutInflater = LayoutInflater.from(aContext);
     }
 
-    public List<Product> getListData(){
+    public List<Merchadise> getListData(){
         return listData;
     }
 
@@ -34,7 +34,7 @@ public class ProductInBillAdapter extends BaseAdapter {
     }
 
     @Override
-    public Product getItem(int position) {return listData.get(position);}
+    public Merchadise getItem(int position) {return listData.get(position);}
 
     @Override
     public long getItemId(int position) {
@@ -58,38 +58,38 @@ public class ProductInBillAdapter extends BaseAdapter {
         }
         else holder = (ViewHolder) convertView.getTag();
 
-        final Product product = this.listData.get(position);
+        final Merchadise merchadise = this.listData.get(position);
 
         holder.btndel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 listData.remove(position);
                 notifyDataSetChanged();
-                responder.dellBDTcodem(product.getId());
+                responder.dellBDTcodem(merchadise.getId());
             }
         });
 
 
-        holder.nameView.setText(product.getName());
-        holder.amountView.setText(String.valueOf(product.amount));
-        holder.sumView.setText(String.valueOf((product.getSum()- product.amount) + " " + product.getCount()));
+        holder.nameView.setText(merchadise.getName());
+        holder.amountView.setText(String.valueOf(merchadise.amount));
+        holder.sumView.setText(String.valueOf((merchadise.getSum()- merchadise.amount) + " " + merchadise.getCount()));
         //String.format("%,d", Long.parseLong(view.toString()));
-        String d = String.valueOf(product.getPrice());
+        String d = String.valueOf(merchadise.getPrice());
         holder.priceView.setText(String.format("%,d", Long.parseLong(d)));
 
-        d = String.valueOf(product.getPrice()* product.amount);
+        d = String.valueOf(merchadise.getPrice()* merchadise.amount);
         holder.outputView.setText(String.format("%,d", Long.parseLong(d))+" đ");
 
         holder.downam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (product.amount>1) {
-                    product.amount--;
-                    holder.amountView.setText(String.valueOf(product.amount));
-                    holder.sumView.setText(String.valueOf((product.getSum()- product.amount) + " " + product.getCount()));
-                    String dd = String.valueOf(product.getPrice()* product.amount);
+                if (merchadise.amount>1) {
+                    merchadise.amount--;
+                    holder.amountView.setText(String.valueOf(merchadise.amount));
+                    holder.sumView.setText(String.valueOf((merchadise.getSum()- merchadise.amount) + " " + merchadise.getCount()));
+                    String dd = String.valueOf(merchadise.getPrice()* merchadise.amount);
                     holder.outputView.setText(String.format("%,d", Long.parseLong(dd))+" đ");
-                    responder.updtoBDT(product.getId(), product.amount);
+                    responder.updtoBDT(merchadise.getId(), merchadise.amount);
                 }
             }
         });
@@ -97,13 +97,13 @@ public class ProductInBillAdapter extends BaseAdapter {
         holder.upam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (product.amount< product.getSum()) {
-                    product.amount++;
-                    holder.amountView.setText(String.valueOf(product.amount));
-                    holder.sumView.setText(String.valueOf((product.getSum() - product.amount) + " " + product.getCount()));
-                    String dd = String.valueOf(product.getPrice() * product.amount);
+                if (merchadise.amount< merchadise.getSum()) {
+                    merchadise.amount++;
+                    holder.amountView.setText(String.valueOf(merchadise.amount));
+                    holder.sumView.setText(String.valueOf((merchadise.getSum() - merchadise.amount) + " " + merchadise.getCount()));
+                    String dd = String.valueOf(merchadise.getPrice() * merchadise.amount);
                     holder.outputView.setText(String.format("%,d", Long.parseLong(dd))+" đ");
-                    responder.updtoBDT(product.getId(), product.amount);
+                    responder.updtoBDT(merchadise.getId(), merchadise.amount);
                 }
             }
         });

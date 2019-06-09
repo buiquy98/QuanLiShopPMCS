@@ -26,8 +26,8 @@ public class FragmentProduct extends Fragment{
     protected View myView;
     protected DatabaseManager db;
     protected ListView listView;
-    protected List<Product> show = new ArrayList<Product>();
-    protected ProductAllAdapter adapter;
+    protected List<Merchadise> show = new ArrayList<Merchadise>();
+    protected MerchadiseAllAdapter adapter;
     protected Spinner spinnertype;
     protected List<String> listtype = new ArrayList<String>();
     @Nullable
@@ -96,7 +96,7 @@ public class FragmentProduct extends Fragment{
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(myView.getContext(), ProductEdit.class);
+                Intent intent = new Intent(myView.getContext(), MerchadiseEdit.class);
                 intent.putExtra("ID",adapter.getItem(i).getId());
                 startActivityForResult(intent,20);
             }
@@ -108,7 +108,7 @@ public class FragmentProduct extends Fragment{
             @Override
             public void onClick(View view) {
                 searchname.setText("");
-                Intent intent = new Intent(myView.getContext(), ProductAdd.class);
+                Intent intent = new Intent(myView.getContext(), MerchadiseAdd.class);
                 startActivityForResult(intent,10);
             }
         });
@@ -118,7 +118,7 @@ public class FragmentProduct extends Fragment{
         typeedit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(myView.getContext(), ProductType.class);
+                Intent intent = new Intent(myView.getContext(), MerchadiseType.class);
                 startActivityForResult(intent,30);
             }
         });
@@ -156,11 +156,11 @@ public class FragmentProduct extends Fragment{
         }
     }
 
-    protected void updatelistitem(List<Product> listtemp)
+    protected void updatelistitem(List<Merchadise> listtemp)
     {
         show.clear();
         show=listtemp;
-        adapter = new ProductAllAdapter(myView.getContext(),show);
+        adapter = new MerchadiseAllAdapter(myView.getContext(),show);
         listView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }

@@ -18,10 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ProductEdit extends Activity {
+public class MerchadiseEdit extends Activity {
     protected DatabaseManager db;
     protected int idt=0;
-    protected Product mainmer;
+    protected Merchadise mainmer;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +60,7 @@ public class ProductEdit extends Activity {
         tempthing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ProductEdit.super.onBackPressed();
+                MerchadiseEdit.super.onBackPressed();
             }
         });
 
@@ -94,14 +94,14 @@ public class ProductEdit extends Activity {
                 else
                 {
                     int check = 0;
-                    List<Product> listProduct = db.getAllMer();
-                    for (Product item : listProduct){
+                    List<Merchadise> listMerchadise = db.getAllMer();
+                    for (Merchadise item : listMerchadise){
                         if (item.getName().toUpperCase().equals(Mername.getText().toString().toUpperCase())){ check=1; break;}
                     }
                     if (check==1&&mainmer.getName().equals(Mername.getText().toString())) check=0;
                     if (check==0)
                     {
-                        Product temp = new Product();
+                        Merchadise temp = new Merchadise();
                         temp.setName(Mername.getText().toString());
 
                         if (!Mersum.getText().toString().equals(""))

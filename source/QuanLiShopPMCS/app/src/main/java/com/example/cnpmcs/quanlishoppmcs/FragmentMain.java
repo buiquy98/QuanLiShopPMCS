@@ -33,9 +33,9 @@ public class FragmentMain extends Fragment implements SomeInterface {
     protected TabHost tab;//tab chinh cua lap hoa don
     protected DatabaseManager db;//co so du lieu
     protected TextView maintext;//title hoa don
-    protected List<Product> listmer = new ArrayList<Product>();//danh sach san pham thuoc hoa don
+    protected List<Merchadise> listmer = new ArrayList<Merchadise>();//danh sach san pham thuoc hoa don
     protected ListView listView;//list view cac san pham
-    protected ProductInBillAdapter adapter;//adapter cua listview
+    protected MerchadiseInBillAdapter adapter;//adapter cua listview
     protected int main_bill_code;//ma hoa don
     protected int main_bill_pcode;//ma khach hang
     protected int main_bill_offpr=0;//giam gia luong tien
@@ -104,7 +104,7 @@ public class FragmentMain extends Fragment implements SomeInterface {
                 listmer.clear();
                 List<BillItem> billItemList = db.getBDTitem(0);
                 for (BillItem item :billItemList){
-                    Product tada = db.getMerbyId(item.codem);
+                    Merchadise tada = db.getMerbyId(item.codem);
                     tada.amount = item.amountb;
                     listmer.add(tada);
                 }
@@ -144,8 +144,8 @@ public class FragmentMain extends Fragment implements SomeInterface {
                     List<BillItem> listitem = db.getBDTitem(0);
                     for (BillItem item : listitem) {
                         db.addBD(main_bill_code, item.codem, item.amountb);
-                        Product product = db.getMerbyId(item.codem);
-                        db.updMerSum(item.codem, product.getSum()-item.amountb);
+                        Merchadise merchadise = db.getMerbyId(item.codem);
+                        db.updMerSum(item.codem, merchadise.getSum()-item.amountb);
                         Toast.makeText(myView.getContext(), "Lưu hóa đơn thành công", Toast.LENGTH_SHORT).show();
                     }
                     dellBDTcodeb(0);
@@ -261,24 +261,24 @@ public class FragmentMain extends Fragment implements SomeInterface {
     //xu ly cap nhat them san pham
     protected void suggestmer(View view){
 
-        listmer = new ArrayList<Product>(){};
+        listmer = new ArrayList<Merchadise>(){};
         List<BillItem> billItemList = db.getBDTitem(0);
         for (BillItem item :billItemList){
-            Product tada = db.getMerbyId(item.codem);
+            Merchadise tada = db.getMerbyId(item.codem);
             tada.amount = item.amountb;
             listmer.add(tada);
         }
         priceofbill();
 
-        adapter = new ProductInBillAdapter(view.getContext(),listmer,this);
+        adapter = new MerchadiseInBillAdapter(view.getContext(),listmer,this);
         listView.setAdapter(adapter);
 
 
 
         //xu ly text suggest vao cap nhat danh sach san pham cua hoa don
         final List<String> mername2 = new ArrayList<String>(){};
-        final List<Product> listtemp = db.getMerselling();
-        for (Product item : listtemp){
+        final List<Merchadise> listtemp = db.getMerselling();
+        for (Merchadise item : listtemp){
             mername2.add(item.getName().toString());
         }
         final AutoCompleteTextView text = (AutoCompleteTextView) view.findViewById(R.id.pro_auto);
@@ -292,11 +292,11 @@ public class FragmentMain extends Fragment implements SomeInterface {
                 int check =0;
                 int id =-1;
                 String d = adapterView.getItemAtPosition(i).toString();
-                for (Product item : listmer){
+                for (Merchadise item : listmer){
                     if (item.getName().equals(d)) {check=1; id=listmer.indexOf(item); break;}
                 }
                 if (check ==0) {
-                    Product temp = db.getMerbyName(d);
+                    Merchadise temp = db.getMerbyName(d);
                     temp.amount = 1;
                     listmer.add(temp);
                     adapter.notifyDataSetChanged();
@@ -372,7 +372,7 @@ public class FragmentMain extends Fragment implements SomeInterface {
     //cap nhat tong tien cua bill
     protected void priceofbill(){
         int temp =0;
-        for (Product item : listmer){
+        for (Merchadise item : listmer){
             temp=temp+item.amount*item.getPrice();
         }
 

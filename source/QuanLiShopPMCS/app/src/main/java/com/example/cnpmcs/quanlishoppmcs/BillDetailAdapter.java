@@ -52,10 +52,10 @@ public class BillDetailAdapter extends BaseAdapter {
 
         BillItem billItem = this.listData.get(position);
         DatabaseManager db = DatabaseManager.getInstance(convertView.getContext().getApplicationContext());
-        Product product = db.getMerbyId(billItem.codem);
-        holder.nameView.setText(product.getName());
+        Merchadise merchadise = db.getMerbyId(billItem.codem);
+        holder.nameView.setText(merchadise.getName());
         holder.amountView.setText(String.valueOf(billItem.amountb));
-        String d = String.valueOf(billItem.amountb* product.getPrice());
+        String d = String.valueOf(billItem.amountb* merchadise.getPrice());
         holder.miniprView.setText(String.format("%,d", Long.parseLong(d))+ " đ");
         return convertView;
     }

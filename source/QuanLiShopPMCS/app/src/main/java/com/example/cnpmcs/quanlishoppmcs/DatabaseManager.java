@@ -644,19 +644,19 @@ public class DatabaseManager extends SQLiteOpenHelper {
         }
     }
 
-    //Product
-    public void addMer(Product product){
+    //Merchadise
+    public void addMer(Merchadise merchadise){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(ID,maxMerid()+1);
-        values.put(MNAME, product.getName());
-        values.put(MSUM, product.getSum());
-        values.put(MSELL, product.getSell());
-        values.put(MBUY, product.getBuy());
-        values.put(MPRICE, product.getPrice());
-        values.put(MTYPE, product.getType());
-        values.put(MCOUNT, product.getCount());
-        values.put(MNOTE, product.getNote());
+        values.put(MNAME, merchadise.getName());
+        values.put(MSUM, merchadise.getSum());
+        values.put(MSELL, merchadise.getSell());
+        values.put(MBUY, merchadise.getBuy());
+        values.put(MPRICE, merchadise.getPrice());
+        values.put(MTYPE, merchadise.getType());
+        values.put(MCOUNT, merchadise.getCount());
+        values.put(MNOTE, merchadise.getNote());
 
         db.insert(TABLE_MER, null, values);
         db.close();
@@ -671,19 +671,19 @@ public class DatabaseManager extends SQLiteOpenHelper {
         delBDcodem(id);
     }
 
-    public void updMer(int id, Product product) {
+    public void updMer(int id, Merchadise merchadise) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         String[] s = new String[]{String.valueOf(id)};
 
-        values.put(MNAME, product.getName());
-        values.put(MSUM, product.getSum());
-        values.put(MSELL, product.getSell());
-        values.put(MBUY, product.getBuy());
-        values.put(MPRICE, product.getPrice());
-        values.put(MTYPE, product.getType());
-        values.put(MCOUNT, product.getCount());
-        values.put(MNOTE, product.getNote());
+        values.put(MNAME, merchadise.getName());
+        values.put(MSUM, merchadise.getSum());
+        values.put(MSELL, merchadise.getSell());
+        values.put(MBUY, merchadise.getBuy());
+        values.put(MPRICE, merchadise.getPrice());
+        values.put(MTYPE, merchadise.getType());
+        values.put(MCOUNT, merchadise.getCount());
+        values.put(MNOTE, merchadise.getNote());
         db.update(TABLE_MER, values, ID + "=?", s);
         db.close();
     }
@@ -697,46 +697,46 @@ public class DatabaseManager extends SQLiteOpenHelper {
         db.close();
     }
 
-    public Product getMerbyId(int id) {
+    public Merchadise getMerbyId(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
         String[] s = new String[]{String.valueOf(id)};
         Cursor cursor = db.query(TABLE_MER, new String[]{ID, MNAME, MSUM, MSELL, MBUY, MPRICE, MTYPE, MCOUNT, MNOTE}, ID + "=?", s, null, null, null);
         // query (String table, String[] columns, String selection, String[]selectionArgs, String groupBy, String having, String orderBy)
         // rawquery ("SELECT * FROM "+TABLE_NAME +" WHERE id = '1'",null)
-        Product product = null;
+        Merchadise merchadise = null;
         if (cursor != null) {
             cursor.moveToFirst();
-            product = new Product();
-            //product = new Product(cursor.getInt(0),cursor.getString(1),cursor.getInt(2),cursor.getInt(3),cursor.getInt(4),cursor.getInt(5),cursor.getString(6),cursor.getString(7),cursor.getString(8));
-            product.setId(cursor.getInt(0));
-            product.setName(cursor.getString(1));
-            product.setSum(cursor.getInt(2));
-            product.setSell(cursor.getInt(3));
-            product.setBuy(cursor.getInt(4));
-            product.setPrice(cursor.getInt(5));
-            product.setType(cursor.getString(6));
-            product.setCount(cursor.getString(7));
-            product.setNote(cursor.getString(8));
+            merchadise = new Merchadise();
+            //merchadise = new Merchadise(cursor.getInt(0),cursor.getString(1),cursor.getInt(2),cursor.getInt(3),cursor.getInt(4),cursor.getInt(5),cursor.getString(6),cursor.getString(7),cursor.getString(8));
+            merchadise.setId(cursor.getInt(0));
+            merchadise.setName(cursor.getString(1));
+            merchadise.setSum(cursor.getInt(2));
+            merchadise.setSell(cursor.getInt(3));
+            merchadise.setBuy(cursor.getInt(4));
+            merchadise.setPrice(cursor.getInt(5));
+            merchadise.setType(cursor.getString(6));
+            merchadise.setCount(cursor.getString(7));
+            merchadise.setNote(cursor.getString(8));
         }
         cursor.close();
         db.close();
-        return product;
+        return merchadise;
     }
 
 
 
-    public List<Product> getMerbyType(String mertype) {
+    public List<Merchadise> getMerbyType(String mertype) {
         SQLiteDatabase db = this.getReadableDatabase();
         String[] s = new String[]{mertype};
         Cursor cursor = db.query(TABLE_MER, new String[]{ID, MNAME, MSUM, MSELL, MBUY, MPRICE, MTYPE, MCOUNT, MNOTE}, MTYPE + "=?", s, null, null, null);
         // query (String table, String[] columns, String selection, String[]selectionArgs, String groupBy, String having, String orderBy)
         // rawquery ("SELECT * FROM "+TABLE_NAME +" WHERE id = '1'",null)
-        List<Product> list = new ArrayList<Product>();
-        Product product = null;
+        List<Merchadise> list = new ArrayList<Merchadise>();
+        Merchadise merchadise = null;
         if (cursor.moveToFirst()) {
             do {
-                product = new Product(cursor.getInt(0),cursor.getString(1), cursor.getInt(2), cursor.getInt(3), cursor.getInt(4), cursor.getInt(5), cursor.getString(6),cursor.getString(7),cursor.getString(8));
-                list.add(product);
+                merchadise = new Merchadise(cursor.getInt(0),cursor.getString(1), cursor.getInt(2), cursor.getInt(3), cursor.getInt(4), cursor.getInt(5), cursor.getString(6),cursor.getString(7),cursor.getString(8));
+                list.add(merchadise);
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -744,46 +744,46 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return list;
     }
 
-    public Product getMerbyName(String name) {
+    public Merchadise getMerbyName(String name) {
         SQLiteDatabase db = this.getReadableDatabase();
         String[] s = new String[]{name};
         Cursor cursor = db.query(TABLE_MER, new String[]{ID, MNAME, MSUM, MSELL, MBUY, MPRICE, MTYPE, MCOUNT, MNOTE}, MNAME + "=?", s, null, null, null);
         // query (String table, String[] columns, String selection, String[]selectionArgs, String groupBy, String having, String orderBy)
         // rawquery ("SELECT * FROM "+TABLE_NAME +" WHERE id = '1'",null)
        // Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_MER + "WHERE name LIKE '%" + name + "%'", null);
-        Product product = null;
+        Merchadise merchadise = null;
         if (cursor != null) {
             cursor.moveToFirst();
-            product = new Product();
-            //product = new Product(cursor.getInt(0),cursor.getString(1),cursor.getInt(2),cursor.getInt(3),cursor.getInt(4),cursor.getInt(5),cursor.getString(6),cursor.getString(7),cursor.getString(8));
-            product.setId(cursor.getInt(0));
-            product.setName(cursor.getString(1));
-            product.setSum(cursor.getInt(2));
-            product.setSell(cursor.getInt(3));
-            product.setBuy(cursor.getInt(4));
-            product.setPrice(cursor.getInt(5));
-            product.setType(cursor.getString(6));
-            product.setCount(cursor.getString(7));
-            product.setNote(cursor.getString(8));
+            merchadise = new Merchadise();
+            //merchadise = new Merchadise(cursor.getInt(0),cursor.getString(1),cursor.getInt(2),cursor.getInt(3),cursor.getInt(4),cursor.getInt(5),cursor.getString(6),cursor.getString(7),cursor.getString(8));
+            merchadise.setId(cursor.getInt(0));
+            merchadise.setName(cursor.getString(1));
+            merchadise.setSum(cursor.getInt(2));
+            merchadise.setSell(cursor.getInt(3));
+            merchadise.setBuy(cursor.getInt(4));
+            merchadise.setPrice(cursor.getInt(5));
+            merchadise.setType(cursor.getString(6));
+            merchadise.setCount(cursor.getString(7));
+            merchadise.setNote(cursor.getString(8));
         }
         cursor.close();
         db.close();
-        return product;
+        return merchadise;
     }
 
-    public List<Product> getMerbyPartName(String name) {
+    public List<Merchadise> getMerbyPartName(String name) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         //Cursor cursor = db.query(TABLE_PERSON, new String[]{ID, CODEP, NAME, PHONE, ADD, MAIL, TYPE, NOTE}, NAME + "=?", name, null, null, null);
         // query (String table, String[] columns, String selection, String[]selectionArgs, String groupBy, String having, String orderBy)
         // rawquery ("SELECT * FROM "+TABLE_NAME +" WHERE id = '1'",null)
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_MER + " WHERE " +MNAME+" LIKE '%" + name + "%'", null);
-        List<Product> list = new ArrayList<Product>();
-        Product product = null;
+        List<Merchadise> list = new ArrayList<Merchadise>();
+        Merchadise merchadise = null;
         if (cursor.moveToFirst()) {
             do {
-                product = new Product(cursor.getInt(0),cursor.getString(1), cursor.getInt(2), cursor.getInt(3), cursor.getInt(4), cursor.getInt(5), cursor.getString(6),cursor.getString(7),cursor.getString(8));
-                list.add(product);
+                merchadise = new Merchadise(cursor.getInt(0),cursor.getString(1), cursor.getInt(2), cursor.getInt(3), cursor.getInt(4), cursor.getInt(5), cursor.getString(6),cursor.getString(7),cursor.getString(8));
+                list.add(merchadise);
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -791,23 +791,23 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return list;
     }
 
-    public List<Product> getAllMer() {
-        List<Product> list = new ArrayList<Product>();
+    public List<Merchadise> getAllMer() {
+        List<Merchadise> list = new ArrayList<Merchadise>();
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.query(TABLE_MER, new String[]{ID, MNAME, MSUM, MSELL, MBUY, MPRICE, MTYPE, MCOUNT, MNOTE}, null, null, null, null, null);
         if (cursor.moveToFirst()) {
             do {
-                Product product = new Product();
-                product.setId(cursor.getInt(0));
-                product.setName(cursor.getString(1));
-                product.setSum(cursor.getInt(2));
-                product.setSell(cursor.getInt(3));
-                product.setBuy(cursor.getInt(4));
-                product.setPrice(cursor.getInt(5));
-                product.setType(cursor.getString(6));
-                product.setCount(cursor.getString(7));
-                product.setNote(cursor.getString(8));
-                list.add(product);
+                Merchadise merchadise = new Merchadise();
+                merchadise.setId(cursor.getInt(0));
+                merchadise.setName(cursor.getString(1));
+                merchadise.setSum(cursor.getInt(2));
+                merchadise.setSell(cursor.getInt(3));
+                merchadise.setBuy(cursor.getInt(4));
+                merchadise.setPrice(cursor.getInt(5));
+                merchadise.setType(cursor.getString(6));
+                merchadise.setCount(cursor.getString(7));
+                merchadise.setNote(cursor.getString(8));
+                list.add(merchadise);
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -815,25 +815,25 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return list;
     }
 
-    public List<Product> getMerselling() {
-        List<Product> list = new ArrayList<Product>();
+    public List<Merchadise> getMerselling() {
+        List<Merchadise> list = new ArrayList<Merchadise>();
         SQLiteDatabase db = this.getWritableDatabase();
         String[] s = new String[]{String.valueOf(1)};
         Cursor cursor = db.query(TABLE_MER, new String[]{ID, MNAME, MSUM, MSELL, MBUY, MPRICE, MTYPE, MCOUNT, MNOTE}, MSELL + "=?",s, null, null, null);
         if (cursor.moveToFirst()) {
             do {
-                Product product = new Product();
-                product.setId(cursor.getInt(0));
-                product.setName(cursor.getString(1));
-                product.setSum(cursor.getInt(2));
-                product.setSell(cursor.getInt(3));
-                product.setBuy(cursor.getInt(4));
-                product.setPrice(cursor.getInt(5));
-                product.setType(cursor.getString(6));
-                product.setCount(cursor.getString(7));
-                product.setNote(cursor.getString(8));
+                Merchadise merchadise = new Merchadise();
+                merchadise.setId(cursor.getInt(0));
+                merchadise.setName(cursor.getString(1));
+                merchadise.setSum(cursor.getInt(2));
+                merchadise.setSell(cursor.getInt(3));
+                merchadise.setBuy(cursor.getInt(4));
+                merchadise.setPrice(cursor.getInt(5));
+                merchadise.setType(cursor.getString(6));
+                merchadise.setCount(cursor.getString(7));
+                merchadise.setNote(cursor.getString(8));
                 if (cursor.getInt(2)>0)
-                    list.add(product);
+                    list.add(merchadise);
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -864,7 +864,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return t;
     }
 
-    //Product Type
+    //Merchadise Type
     public int maxMerTypeid() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_PRODUCTTYPE, new String[]{ID}, null, null, null, null, null);
@@ -909,10 +909,10 @@ public class DatabaseManager extends SQLiteOpenHelper {
         db.delete(TABLE_PRODUCTTYPE, MTYPE + " = ?", s);
         db.close();
 
-        List<Product> list = getMerbyType(mertype);
-        for (Product product :list){
-            product.setType("");
-            updMer(product.getId(), product);
+        List<Merchadise> list = getMerbyType(mertype);
+        for (Merchadise merchadise :list){
+            merchadise.setType("");
+            updMer(merchadise.getId(), merchadise);
         }
     }
 
@@ -924,10 +924,10 @@ public class DatabaseManager extends SQLiteOpenHelper {
         db.update(TABLE_PRODUCTTYPE,contentValues,MTYPE+"=?",s);
         db.close();
 
-        List<Product> list = getMerbyType(mertypeold);
-        for (Product product :list){
-            product.setType(mertypenew);
-            updMer(product.getId(), product);
+        List<Merchadise> list = getMerbyType(mertypeold);
+        for (Merchadise merchadise :list){
+            merchadise.setType(mertypenew);
+            updMer(merchadise.getId(), merchadise);
         }
     }
 }

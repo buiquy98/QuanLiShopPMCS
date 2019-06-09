@@ -10,18 +10,18 @@ import android.widget.TextView;
 import java.util.List;
 
 
-public class ProductAllAdapter extends BaseAdapter {
-    private List<Product> listData;
+public class MerchadiseAllAdapter extends BaseAdapter {
+    private List<Merchadise> listData;
     private LayoutInflater layoutInflater;
     private Context context;
 
-    public ProductAllAdapter(Context aContext, List<Product> listData) {
+    public MerchadiseAllAdapter(Context aContext, List<Merchadise> listData) {
         this.context = aContext;
         this.listData = listData;
         layoutInflater = LayoutInflater.from(aContext);
     }
 
-    public List<Product> getListData(){
+    public List<Merchadise> getListData(){
         return listData;
     }
 
@@ -31,7 +31,7 @@ public class ProductAllAdapter extends BaseAdapter {
     }
 
     @Override
-    public Product getItem(int position) {return listData.get(position);}
+    public Merchadise getItem(int position) {return listData.get(position);}
 
     @Override
     public long getItemId(int position) {
@@ -52,17 +52,17 @@ public class ProductAllAdapter extends BaseAdapter {
         }
         else holder = (ViewHolder) convertView.getTag();
 
-        Product product = this.listData.get(position);
-        holder.nameView.setText(product.getName());
-        if (product.getSell()==1)
+        Merchadise merchadise = this.listData.get(position);
+        holder.nameView.setText(merchadise.getName());
+        if (merchadise.getSell()==1)
             holder.sellView.setText("Đang bán");
         else
             holder.sellView.setText("Chưa bắt đầu bán");
-        holder.sumView.setText(String.valueOf(product.getSum() + " " + product.getCount()));
+        holder.sumView.setText(String.valueOf(merchadise.getSum() + " " + merchadise.getCount()));
         //String.format("%,d", Long.parseLong(view.toString()));
-        String d = String.valueOf(product.getPrice());
+        String d = String.valueOf(merchadise.getPrice());
         holder.priceView.setText(String.format("%,d", Long.parseLong(d)));
-        holder.typeView.setText(String.valueOf(product.getType()));
+        holder.typeView.setText(String.valueOf(merchadise.getType()));
         return convertView;
     }
 

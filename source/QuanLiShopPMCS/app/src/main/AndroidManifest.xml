@@ -19,9 +19,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.cnpmcs.quanlishoppmcs.ProductAdd"></activity>
-        <activity android:name="com.example.cnpmcs.quanlishoppmcs.ProductEdit"></activity>
-        <activity android:name="com.example.cnpmcs.quanlishoppmcs.ProductType"></activity>
+        <activity android:name="com.example.cnpmcs.quanlishoppmcs.MerchadiseAdd"></activity>
+        <activity android:name="com.example.cnpmcs.quanlishoppmcs.MerchadiseEdit"></activity>
+        <activity android:name="com.example.cnpmcs.quanlishoppmcs.MerchadiseType"></activity>
         <activity android:name="com.example.cnpmcs.quanlishoppmcs.PersonAdd"></activity>
         <activity android:name="com.example.cnpmcs.quanlishoppmcs.PersonEdit"></activity>
         <activity android:name="com.example.cnpmcs.quanlishoppmcs.PersonType"></activity>

@@ -3,7 +3,7 @@ package com.example.cnpmcs.quanlishoppmcs;
 import java.io.Serializable;
 
 
-public class Product implements Serializable {
+public class Merchadise implements Serializable {
     private int id;
     private String name;
     private int sum;
@@ -15,9 +15,9 @@ public class Product implements Serializable {
     private String note;
     public int amount;
 
-    public Product(){}
+    public Merchadise(){}
 
-    public Product(int id, String name, int sum, int sell, int buy, int price, String type, String count, String note){
+    public Merchadise(int id, String name, int sum, int sell, int buy, int price, String type, String count, String note){
         this.id = id;
         //  this.code = code;
         this.name = name;
@@ -30,7 +30,7 @@ public class Product implements Serializable {
         this.note = note;
     }
 
-    public Product(String name, int sum, int sell, int buy, int price, String type, String count, String note){
+    public Merchadise(String name, int sum, int sell, int buy, int price, String type, String count, String note){
         this.id = -1;
         //this.code = code;
         this.name = name;
