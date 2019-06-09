@@ -41,7 +41,7 @@ public class MerchadiseAllAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
-            convertView = layoutInflater.inflate(R.layout.item_pro_list_all, null);
+            convertView = layoutInflater.inflate(R.layout.item_mer_list_all, null);
             holder = new ViewHolder();
             holder.nameView = (TextView) convertView.findViewById(R.id.mitextView1);
             holder.sellView = (TextView) convertView.findViewById(R.id.mitextView2);

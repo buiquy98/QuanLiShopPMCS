@@ -79,7 +79,7 @@
                     android:orientation="vertical">
 
                     <include
-                        layout="@layout/pro_in_bill"
+                        layout="@layout/mer_in_bill"
                         layout_width="match_parent"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />

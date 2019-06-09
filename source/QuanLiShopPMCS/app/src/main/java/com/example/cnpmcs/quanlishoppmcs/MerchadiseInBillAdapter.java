@@ -44,7 +44,7 @@ public class MerchadiseInBillAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         final ViewHolder holder;
         if (convertView == null) {
-            convertView = layoutInflater.inflate(R.layout.item_pro_in_bill, null);
+            convertView = layoutInflater.inflate(R.layout.item_mer_in_bill, null);
             holder = new ViewHolder();
             holder.nameView = (TextView) convertView.findViewById(R.id.bi_pro_name);
             holder.sumView = (TextView) convertView.findViewById(R.id.bi_pro_sum);

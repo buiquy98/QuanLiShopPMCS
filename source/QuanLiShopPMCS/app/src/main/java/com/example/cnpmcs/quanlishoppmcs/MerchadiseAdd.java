@@ -21,7 +21,7 @@ public class MerchadiseAdd extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.pro_edit_add);
+        setContentView(R.layout.mer_edit_add);
 
         //set up toolbar phu cho activity, toolbar khong lien ket vs toolbar chinh cua ung dung
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_pro_add);

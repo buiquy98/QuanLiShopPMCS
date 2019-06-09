@@ -25,7 +25,7 @@ public class MerchadiseEdit extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.pro_edit_add);
+        setContentView(R.layout.mer_edit_add);
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_pro_add);
         toolbar.setTitle("Thông tin Sản phẩm");
         toolbar.setTitleTextColor(Color.parseColor("#ffffff"));
