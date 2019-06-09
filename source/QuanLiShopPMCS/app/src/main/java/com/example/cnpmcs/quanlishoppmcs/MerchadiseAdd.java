@@ -24,23 +24,23 @@ public class MerchadiseAdd extends Activity {
         setContentView(R.layout.mer_edit_add);
 
         //set up toolbar phu cho activity, toolbar khong lien ket vs toolbar chinh cua ung dung
-        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_pro_add);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_mer_add);
         toolbar.setTitle("Thêm Sản phẩm");
         toolbar.setTitleTextColor(Color.parseColor("#ffffff"));
 
         db = DatabaseManager.getInstance(getBaseContext());
 
-        final TextView Mername = (TextView) findViewById(R.id.pro_add_name);
-        final TextView Mersum = (TextView) findViewById(R.id.pro_add_sum);
-        final TextView Merbuy = (TextView) findViewById(R.id.pro_add_buy);
-        final TextView Merprice = (TextView) findViewById(R.id.pro_add_price);
-        final TextView Mercount = (TextView) findViewById(R.id.pro_add_count);
-        final TextView Mernote = (TextView) findViewById(R.id.pro_add_note);
+        final TextView Mername = (TextView) findViewById(R.id.mer_add_name);
+        final TextView Mersum = (TextView) findViewById(R.id.mer_add_sum);
+        final TextView Merbuy = (TextView) findViewById(R.id.mer_add_buy);
+        final TextView Merprice = (TextView) findViewById(R.id.mer_add_price);
+        final TextView Mercount = (TextView) findViewById(R.id.mer_add_count);
+        final TextView Mernote = (TextView) findViewById(R.id.mer_add_note);
 
-        Button btnt = (Button) findViewById(R.id.btn_second_pro);
+        Button btnt = (Button) findViewById(R.id.btn_second_mer);
         btnt.setVisibility(btnt.GONE);
 
-        Button tempthing = (Button) findViewById(R.id.btn_cancel_pro);
+        Button tempthing = (Button) findViewById(R.id.btn_cancel_mer);
         tempthing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -48,18 +48,18 @@ public class MerchadiseAdd extends Activity {
             }
         });
 
-        final Spinner Mersell = (Spinner) findViewById(R.id.spinner_pro_sell);
+        final Spinner Mersell = (Spinner) findViewById(R.id.spinner_mer_sell);
         List<String> sell = new ArrayList<String>();
         sell.add("Có"); sell.add("Không");
         Mersell.setAdapter(new ArrayAdapter(this,R.layout.item_spinner,sell));
 
-        final Spinner Mertype = (Spinner) findViewById(R.id.spinner_pro_type);
+        final Spinner Mertype = (Spinner) findViewById(R.id.spinner_mer_type);
         List<String> type = new ArrayList<String>();
         type.addAll(db.getMerType());
         if (type.size()==0) type.add("");
         Mertype.setAdapter(new ArrayAdapter(this,R.layout.item_spinner,type));
 
-        Button btnadd = (Button) findViewById(R.id.btn_pro_add_ok);
+        Button btnadd = (Button) findViewById(R.id.btn_mer_add_ok);
         btnadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
